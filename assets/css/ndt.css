@@ -82,6 +82,58 @@
   --ndt-light-success: #467259;
   --ndt-light-info: #3D5C8F;
 }
+/* ===== Global page frame ===== */
+
+html,
+body {
+  background-color: #0B0C0E;          /* bg-dark */
+  color: #F5F5F4;                     /* text */
+}
+
+/* Let Elementor sections be transparent so the body shows through */
+body.elementor-page,
+.elementor-page,
+.elementor,
+.elementor-section-wrap {
+  background: transparent !important;
+}
+
+/* ===== NDT dark base ===== */
+
+:root {
+  --bg-dark: #0B0C0E;
+  --bg: #101113;
+  --bg-light: #22252B;
+
+  --text: #F5F5F4;
+  --text-muted: #BFC4BB;
+
+  --border: #2E3138;
+  --border-muted: #26282C;
+
+  --primary: #BAA2E7;
+  --primary-hover: #A28DD8;
+  --primary-focus: #8DA0BF;
+  --text-on-primary: #111317;
+
+  --accent: #8DA0BF;
+  --highlight: #40454F;
+}
+
+/* Page background + default text */
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text);
+}
+
+/* Let Elementor sections be transparent by default,
+   so the body dark shows through instead of white */
+
+.elementor-page .elementor-section,
+.elementor-page .elementor-container {
+  background-color: transparent;
+}
 
 /* =========================================
    Abstract theme mapping
