@@ -1,0 +1,163 @@
+/* =========================================
+   Newberry Dog Training Co.
+   Global design tokens and theme mapping
+   ========================================= */
+
+/* Canonical tokens: do NOT hardcode hex outside this block
+   unless you are adding to this token list on purpose. */
+
+:root {
+  /* Dark theme core surfaces */
+  --ndt-bg-dark: #0B0C0E;
+  --ndt-bg: #101113;
+  --ndt-bg-light: #22252B;
+
+  /* Dark theme text */
+  --ndt-text: #F5F5F4;
+  --ndt-text-muted: #BFC4BB;
+
+  /* Dark theme borders and highlights */
+  --ndt-highlight: #40454F;
+  --ndt-border: #2E3138;
+  --ndt-border-muted: #26282C;
+
+  /* Dark theme brand + states */
+  --ndt-primary: #BAA2E7;
+  --ndt-primary-hover: #A28DD8;
+  --ndt-primary-focus: #8DA0BF;
+  --ndt-text-on-primary: #111317;
+
+  --ndt-secondary: #939EAE;
+  --ndt-accent: #8DA0BF;
+
+  --ndt-danger: #A14553;
+  --ndt-warning: #A6A17D;
+  --ndt-success: #85A894;
+  --ndt-info: #8DA0BF;
+
+  /* Logo-only colors (rare use) */
+  --ndt-logo-accent: #5F355F;
+  --ndt-logo-accent-ink: #4B2163;
+
+  /* Utility colors */
+  --ndt-utility-ink: #090608;
+  --ndt-utility-taupe: #4F4745;
+  --ndt-utility-brick: #9C3545;
+  --ndt-utility-sand: #D1BCA9;
+  --ndt-utility-sky: #7895C4;
+  --ndt-utility-ochre: #9D8058;
+  --ndt-utility-plum-deep: #4B2163;
+
+  /* Transparency helpers */
+  --ndt-transparent: #FFFFFF00;
+  --ndt-bg-dark-trans: #0B0C0EF5;
+  --ndt-bg-trans: #101113F7;
+  --ndt-bg-light-trans: #22252BB0;
+
+  /* Light theme core surfaces */
+  --ndt-light-bg-dark: #E8EAED;
+  --ndt-light-bg: #F3F4F6;
+  --ndt-light-bg-light: #F9FAFB;
+
+  /* Light theme text */
+  --ndt-light-text: #111317;
+  --ndt-light-text-muted: #575E6B;
+
+  /* Light theme borders and highlights */
+  --ndt-light-highlight: #E0E4EB;
+  --ndt-light-border: #C0C5CE;
+  --ndt-light-border-muted: #DCDFE5;
+
+  /* Light theme brand + states */
+  --ndt-light-primary: #582BAB;
+  --ndt-light-primary-hover: #46298E;
+  --ndt-light-primary-focus: #5070A5;
+  --ndt-light-text-on-primary: #FFFFFF;
+
+  --ndt-light-secondary: #586474;
+  --ndt-light-accent: #3D5C8F;
+
+  --ndt-light-danger: #993342;
+  --ndt-light-warning: #746E44;
+  --ndt-light-success: #467259;
+  --ndt-light-info: #3D5C8F;
+}
+
+/* =========================================
+   Abstract theme mapping
+   Use these in components: var(--bg), var(--text) etc.
+   ========================================= */
+
+/* Default / dark theme */
+
+body,
+body[data-theme="dark"] {
+  --bg-dark: var(--ndt-bg-dark);
+  --bg: var(--ndt-bg);
+  --bg-light: var(--ndt-bg-light);
+
+  --text: var(--ndt-text);
+  --text-muted: var(--ndt-text-muted);
+
+  --highlight: var(--ndt-highlight);
+
+  --border: var(--ndt-border);
+  --border-muted: var(--ndt-border-muted);
+
+  --primary: var(--ndt-primary);
+  --primary-hover: var(--ndt-primary-hover);
+  --primary-focus: var(--ndt-primary-focus);
+  --text-on-primary: var(--ndt-text-on-primary);
+
+  --secondary: var(--ndt-secondary);
+  --accent: var(--ndt-accent);
+
+  --danger: var(--ndt-danger);
+  --warning: var(--ndt-warning);
+  --success: var(--ndt-success);
+  --info: var(--ndt-info);
+}
+
+/* Light theme mapping */
+
+body[data-theme="light"] {
+  --bg-dark: var(--ndt-light-bg-dark);
+  --bg: var(--ndt-light-bg);
+  --bg-light: var(--ndt-light-bg-light);
+
+  --text: var(--ndt-light-text);
+  --text-muted: var(--ndt-light-text-muted);
+
+  --highlight: var(--ndt-light-highlight);
+
+  --border: var(--ndt-light-border);
+  --border-muted: var(--ndt-light-border-muted);
+
+  --primary: var(--ndt-light-primary);
+  --primary-hover: var(--ndt-light-primary-hover);
+  --primary-focus: var(--ndt-light-primary-focus);
+  --text-on-primary: var(--ndt-light-text-on-primary);
+
+  --secondary: var(--ndt-light-secondary);
+  --accent: var(--ndt-light-accent);
+
+  --danger: var(--ndt-light-danger);
+  --warning: var(--ndt-light-warning);
+  --success: var(--ndt-light-success);
+  --info: var(--ndt-light-info);
+}
+
+/* =========================================
+   Global base styles (safe, minimal)
+   ========================================= */
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Utility class for quick debugging if needed */
+.ndt-debug-outline {
+  outline: 1px solid magenta;
+}
