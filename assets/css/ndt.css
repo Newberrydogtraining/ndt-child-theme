@@ -3,14 +3,14 @@
    Global design tokens and theme mapping
    ========================================= */
 
-/* Canonical tokens: do NOT hardcode hex outside this block
-   unless you are adding to this token list on purpose. */
+/* Canonical tokens: do not hardcode hex outside this block
+   unless you are deliberately extending the token set. */
 
 :root {
   /* Dark theme core surfaces */
   --ndt-bg-dark: #0B0C0E;
   --ndt-bg: #101113;
-  --ndt-bg-light: #1A1B1E; /* updated to match hero surface */
+  --ndt-bg-light: #1A1B1E;
 
   /* Dark theme text */
   --ndt-text: #F5F5F4;
@@ -35,7 +35,7 @@
   --ndt-success: #85A894;
   --ndt-info: #8DA0BF;
 
-  /* Logo-only colors (rare use) */
+  /* Logo-only colors */
   --ndt-logo-accent: #5F355F;
   --ndt-logo-accent-ink: #4B2163;
 
@@ -89,11 +89,13 @@
 
 html,
 body {
-  background-color: #0B0C0E; /* bg-dark base */
-  color: #F5F5F4;            /* text */
+  margin: 0;
+  padding: 0;
+  background-color: var(--ndt-bg-dark);
+  color: var(--ndt-text);
 }
 
-/* Let Elementor sections be transparent so the body shows through */
+/* Let Elementor shells be transparent so the body shows through */
 
 body.elementor-page,
 .elementor-page,
@@ -177,13 +179,288 @@ body[data-theme="light"] {
    Global base styles (safe, minimal)
    ========================================= */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+picture,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Base body typography */
+
 body {
   background-color: var(--bg);
   color: var(--text);
   font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Utility class for quick debugging if needed */
+/* Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4em;
+}
+
+h1 { font-size: clamp(2.4rem, 4vw, 3.4rem); }
+h2 { font-size: clamp(1.9rem, 3.2vw, 2.6rem); }
+h3 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+h4 { font-size: 1.15rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.9rem; }
+
+/* Text elements */
+
+p {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+ul,
+ol {
+  margin: 0 0 1rem 1.25rem;
+  padding: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+strong,
+b {
+  font-weight: 600;
+}
+
+/* Links */
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition:
+    color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Kill Elementor's default button styling, let widgets style their own */
+
+.elementor-button,
+.elementor-button:visited {
+  background-color: transparent;
+  color: inherit;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.elementor-button:hover,
+.elementor-button:focus-visible {
+  background-color: transparent;
+  color: inherit;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* =========================================
+   Global button reset
+   ========================================= */
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+
+  text-align: inherit;
+  box-shadow: none;
+  outline: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.16s ease-out,
+    color 0.16s ease-out,
+    border-color 0.16s ease-out,
+    box-shadow 0.16s ease-out,
+    transform 0.16s ease-out;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--primary, #BAA2E7);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   Layout shell helpers
+   ========================================= */
+
+.ndt-section {
+  width: 100%;
+  padding: clamp(2.4rem, 6vh, 3.6rem) clamp(1.4rem, 4vw, 3.2rem);
+}
+
+.ndt-section-inner {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   Shared card / surface primitives
+   ========================================= */
+
+.ndt-card {
+  position: relative;
+  width: 100%;
+  border-radius: 2em;
+  background-color: var(--bg-light);
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+  color: var(--text);
+}
+
+.ndt-card--soft {
+  border-radius: 1.4em;
+  border-color: var(--border-muted);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
+}
+
+/* =========================================
+   Shared microtypography
+   ========================================= */
+
+.ndt-eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+}
+
+.ndt-muted {
+  color: var(--text-muted);
+}
+
+/* =========================================
+   Shared CTA primitives
+   ========================================= */
+
+.ndt-cta-primary,
+.ndt-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.18s ease-out,
+    color 0.18s ease-out,
+    box-shadow 0.18s ease-out,
+    transform 0.18s ease-out,
+    border-color 0.18s ease-out;
+}
+
+/* Primary pill CTA */
+
+.ndt-cta-primary {
+  padding: 0.75rem 1.4rem;
+  background-color: var(--primary);
+  color: var(--text-on-primary);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+}
+
+.ndt-cta-primary:hover,
+.ndt-cta-primary:focus-visible {
+  background-color: var(--primary-hover);
+  color: var(--text-on-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.85);
+}
+
+.ndt-cta-primary:active {
+  background-color: var(--primary-focus);
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.65);
+}
+
+/* Secondary outline CTA */
+
+.ndt-cta-secondary {
+  padding: 0.55rem 1.1rem;
+  background-color: #111317;
+  color: var(--text-muted);
+  border: 1px solid var(--highlight);
+  box-shadow: none;
+  font-size: 0.85rem;
+}
+
+.ndt-cta-secondary:hover,
+.ndt-cta-secondary:focus-visible {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #111317;
+}
+
+.ndt-cta-secondary:active {
+  background-color: var(--primary-focus);
+  border-color: var(--primary-focus);
+  color: #111317;
+}
+
+/* Kill underlines on all NDT pill CTAs explicitly */
+
+.ndt-cta-primary,
+.ndt-cta-primary:hover,
+.ndt-cta-primary:focus-visible,
+.ndt-cta-secondary,
+.ndt-cta-secondary:hover,
+.ndt-cta-secondary:focus-visible {
+  text-decoration: none !important;
+}
+
+/* =========================================
+   Utilities
+   ========================================= */
+
 .ndt-debug-outline {
   outline: 1px solid magenta;
 }
