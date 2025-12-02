@@ -1,3 +1,16 @@
+# Editor
 .vscode/
-node_modules/
+*.code-workspace
+
+# Cursor / AI junk
+.cursor/
+
+# SFTP config
+sftp.json
+
+# OS noise
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
