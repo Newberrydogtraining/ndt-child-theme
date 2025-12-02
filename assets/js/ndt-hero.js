@@ -1,6 +1,5 @@
 /* =========================================
-   Hero combo help card
-   Uses global NDT utilities from ndt.js
+   HERO COMBO CARD – START
    ========================================= */
 
 (function (window, document) {
@@ -516,7 +515,9 @@
     });
   }
 })(window, document);
-
+/* =========================================
+   HERO COMBO CARD – END
+   ========================================= */
 
 /* =========================================
    CORE TRUTHS – entrance animation
