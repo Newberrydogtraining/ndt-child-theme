@@ -105,6 +105,7 @@
     initAmbientEffects(page);
     initHeroAnimations(page);
     initServiceOrbit(page);
+    initShowcaseCarousel(page);
     initServiceCards(page);
     initMobileCards(page);
     initComparisonTable(page);
@@ -374,6 +375,181 @@
 
       // Start after a delay
       setTimeout(startAutoRotate, 3000);
+    }
+  }
+
+  // =========================================
+  // SHOWCASE CAROUSEL
+  // =========================================
+
+  function initShowcaseCarousel(page) {
+    const showcase = page.querySelector('.ndt-sp-showcase');
+    if (!showcase) return;
+
+    const carousel = showcase.querySelector('.ndt-sp-showcase-carousel');
+    const slides = showcase.querySelectorAll('.ndt-sp-showcase-slide');
+    const dots = showcase.querySelectorAll('.ndt-sp-showcase-dot');
+    const prevBtn = showcase.querySelector('.ndt-sp-showcase-arrow--prev');
+    const nextBtn = showcase.querySelector('.ndt-sp-showcase-arrow--next');
+    
+    if (!slides.length) return;
+
+    let currentIndex = 0;
+    let isDesktop = window.innerWidth >= 1024;
+    let autoPlayTimer = null;
+
+    // Get service key from index
+    const serviceKeys = ['private', 'day', 'board', 'group'];
+
+    function updateSlide(index, animate = true) {
+      currentIndex = ((index % slides.length) + slides.length) % slides.length;
+      
+      if (isDesktop) {
+        // Desktop: show only active slide with animation
+        slides.forEach((slide, i) => {
+          const isActive = i === currentIndex;
+          slide.classList.toggle('is-active', isActive);
+          
+          if (window.gsap && animate && !prefersReducedMotion()) {
+            if (isActive) {
+              gsap.fromTo(slide, 
+                { opacity: 0, scale: 0.95, y: 20 },
+                { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+              );
+            }
+          }
+        });
+      }
+      
+      // Update dots
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('is-active', i === currentIndex);
+      });
+    }
+
+    function nextSlide() {
+      updateSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+      updateSlide(currentIndex - 1);
+    }
+
+    // Dot click handlers
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        updateSlide(i);
+        stopAutoPlay();
+      });
+    });
+
+    // Arrow handlers
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        stopAutoPlay();
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        stopAutoPlay();
+      });
+    }
+
+    // Mobile scroll snap detection
+    if (carousel && !isDesktop) {
+      let scrollTimeout;
+      carousel.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const scrollLeft = carousel.scrollLeft;
+          const slideWidth = slides[0].offsetWidth + 32; // Including gap
+          const newIndex = Math.round(scrollLeft / slideWidth);
+          if (newIndex !== currentIndex && newIndex >= 0 && newIndex < slides.length) {
+            currentIndex = newIndex;
+            dots.forEach((dot, i) => {
+              dot.classList.toggle('is-active', i === currentIndex);
+            });
+          }
+        }, 50);
+      });
+    }
+
+    // Auto-play on desktop
+    function startAutoPlay() {
+      if (!isDesktop || prefersReducedMotion()) return;
+      stopAutoPlay();
+      autoPlayTimer = setInterval(() => {
+        nextSlide();
+      }, 5000);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+
+    // Pause on hover
+    showcase.addEventListener('mouseenter', stopAutoPlay);
+    showcase.addEventListener('mouseleave', () => {
+      if (isDesktop) startAutoPlay();
+    });
+
+    // Keyboard navigation
+    showcase.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        stopAutoPlay();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        stopAutoPlay();
+      }
+    });
+
+    // Handle resize
+    window.addEventListener('resize', debounce(() => {
+      const wasDesktop = isDesktop;
+      isDesktop = window.innerWidth >= 1024;
+      
+      if (wasDesktop !== isDesktop) {
+        if (isDesktop) {
+          // Switched to desktop
+          slides.forEach(slide => slide.classList.remove('is-active'));
+          slides[currentIndex].classList.add('is-active');
+          startAutoPlay();
+        } else {
+          // Switched to mobile - show all slides
+          slides.forEach(slide => slide.classList.add('is-active'));
+          stopAutoPlay();
+        }
+      }
+    }, 200));
+
+    // Initialize
+    updateSlide(0, false);
+    
+    // Start auto-play after a delay
+    setTimeout(() => {
+      if (isDesktop) startAutoPlay();
+    }, 2000);
+
+    // Intersection observer to pause when not visible
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (isDesktop) startAutoPlay();
+          } else {
+            stopAutoPlay();
+          }
+        });
+      }, { threshold: 0.3 });
+      
+      observer.observe(showcase);
     }
   }
 
