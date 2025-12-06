@@ -1414,17 +1414,17 @@
   opacity: 0.05 !important;
 }
 
-/* Add fade overlays on edges */
+/* Add fade overlays on edges - subtle, not aggressive */
 .ndt-services-page::before {
   content: '' !important;
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  height: 150px !important;
-  background: linear-gradient(to bottom, #050607 0%, transparent 100%) !important;
+  height: 80px !important;
+  background: linear-gradient(to bottom, rgba(5, 6, 7, 0.5) 0%, transparent 100%) !important;
   pointer-events: none !important;
-  z-index: 10 !important;
+  z-index: 2 !important;
 }
 
 .ndt-services-page::after {
@@ -1433,23 +1433,23 @@
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  height: 150px !important;
+  height: 100px !important;
   background: linear-gradient(to top, #050607 0%, transparent 100%) !important;
   pointer-events: none !important;
-  z-index: 10 !important;
+  z-index: 2 !important;
 }
 
-/* Side fade via pseudo-elements on content wrapper */
+/* Side fade via pseudo-elements on content wrapper - subtle */
 .ndt-sp-hero::before {
   content: '' !important;
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   bottom: 0 !important;
-  width: 100px !important;
-  background: linear-gradient(to right, #050607 0%, transparent 100%) !important;
+  width: 60px !important;
+  background: linear-gradient(to right, rgba(5, 6, 7, 0.8) 0%, transparent 100%) !important;
   pointer-events: none !important;
-  z-index: 5 !important;
+  z-index: 1 !important;
 }
 
 .ndt-sp-hero::after {
@@ -1458,10 +1458,10 @@
   top: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  width: 100px !important;
-  background: linear-gradient(to left, #050607 0%, transparent 100%) !important;
+  width: 60px !important;
+  background: linear-gradient(to left, rgba(5, 6, 7, 0.8) 0%, transparent 100%) !important;
   pointer-events: none !important;
-  z-index: 5 !important;
+  z-index: 1 !important;
 }
 
 /* =========================================
