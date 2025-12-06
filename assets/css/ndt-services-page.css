@@ -1,0 +1,1879 @@
+/* =========================================
+   NDT SERVICES PAGE – IMMERSIVE EXPERIENCE
+   A world-class services page that converts
+   ========================================= */
+
+/* =========================================
+   SECTION 0: CSS CUSTOM PROPERTIES
+   ========================================= */
+
+.ndt-services-page {
+  --sp-primary: #BAA2E7;
+  --sp-primary-glow: rgba(186, 162, 231, 0.35);
+  --sp-sky: #7895C4;
+  --sp-sky-glow: rgba(120, 149, 196, 0.35);
+  --sp-ochre: #9D8058;
+  --sp-ochre-glow: rgba(157, 128, 88, 0.35);
+  --sp-sage: #85A894;
+  --sp-sage-glow: rgba(133, 168, 148, 0.35);
+  --sp-danger: #A14553;
+  
+  --sp-bg-deep: #050607;
+  --sp-bg-dark: #0B0C0E;
+  --sp-bg-card: #12141A;
+  --sp-bg-elevated: #1A1D24;
+  --sp-border: rgba(255, 255, 255, 0.06);
+  --sp-border-hover: rgba(255, 255, 255, 0.12);
+  
+  --sp-text: #F5F5F4;
+  --sp-text-muted: #9CA3AF;
+  --sp-text-dim: #6B7280;
+  
+  --sp-radius-sm: 12px;
+  --sp-radius-md: 20px;
+  --sp-radius-lg: 28px;
+  --sp-radius-xl: 40px;
+  
+  --sp-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --sp-shadow-md: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --sp-shadow-lg: 0 24px 80px rgba(0, 0, 0, 0.7);
+  --sp-shadow-glow: 0 0 60px var(--sp-primary-glow);
+  
+  --sp-timing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --sp-timing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --sp-timing-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Service-specific color bindings */
+.ndt-services-page[data-active-service="private"] {
+  --sp-active: var(--sp-primary);
+  --sp-active-glow: var(--sp-primary-glow);
+}
+.ndt-services-page[data-active-service="day"] {
+  --sp-active: var(--sp-sky);
+  --sp-active-glow: var(--sp-sky-glow);
+}
+.ndt-services-page[data-active-service="board"] {
+  --sp-active: var(--sp-ochre);
+  --sp-active-glow: var(--sp-ochre-glow);
+}
+.ndt-services-page[data-active-service="group"] {
+  --sp-active: var(--sp-sage);
+  --sp-active-glow: var(--sp-sage-glow);
+}
+
+/* =========================================
+   SECTION 1: PAGE SHELL & LAYOUT
+   ========================================= */
+
+.ndt-services-page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--sp-bg-deep);
+  color: var(--sp-text);
+  font-family: Ubuntu, system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ensure page flows into site's dark background */
+.ndt-services-page::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, var(--sp-bg-deep));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ndt-services-page::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to top, transparent, var(--sp-bg-deep));
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ndt-services-page *,
+.ndt-services-page *::before,
+.ndt-services-page *::after {
+  box-sizing: border-box;
+}
+
+/* Ambient background effects */
+.ndt-sp-ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  /* Fade edges to black */
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 100%);
+}
+
+.ndt-sp-ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.4;
+  transition: all 1.2s var(--sp-timing-smooth);
+}
+
+.ndt-sp-ambient-orb--primary {
+  width: 600px;
+  height: 600px;
+  background: var(--sp-primary);
+  top: -200px;
+  left: -100px;
+  opacity: 0.12;
+}
+
+.ndt-sp-ambient-orb--secondary {
+  width: 500px;
+  height: 500px;
+  background: var(--sp-active, var(--sp-sky));
+  bottom: -150px;
+  right: -100px;
+  opacity: 0.08;
+  transition: background 0.8s ease;
+}
+
+.ndt-sp-ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 60%);
+  opacity: 0.4;
+}
+
+/* =========================================
+   SECTION 2: HERO - IMMERSIVE SHOWCASE
+   ========================================= */
+
+.ndt-sp-hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 5vw, 4rem);
+  z-index: 1;
+  overflow: visible;
+}
+
+.ndt-sp-hero-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+/* Hero Content */
+.ndt-sp-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ndt-sp-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(186, 162, 231, 0.1);
+  border: 1px solid rgba(186, 162, 231, 0.25);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sp-primary);
+  width: fit-content;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.ndt-sp-hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--sp-primary);
+  border-radius: 50%;
+  animation: sp-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sp-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.ndt-sp-hero-title {
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--sp-text);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.ndt-sp-hero-title-accent {
+  background: linear-gradient(135deg, var(--sp-primary), var(--sp-sky));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ndt-sp-hero-subtitle {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.6;
+  color: var(--sp-text-muted);
+  max-width: 500px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.ndt-sp-hero-ctas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Hero CTA Buttons */
+.ndt-sp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1rem 1.8rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s var(--sp-timing-bounce);
+  position: relative;
+  overflow: hidden;
+}
+
+.ndt-sp-cta--primary {
+  background: linear-gradient(135deg, var(--sp-primary), #A28DD8);
+  color: #0D0E10;
+  border: none;
+  box-shadow: 
+    0 16px 40px rgba(186, 162, 231, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.ndt-sp-cta--primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 
+    0 24px 60px rgba(186, 162, 231, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+}
+
+.ndt-sp-cta--secondary {
+  background: transparent;
+  color: var(--sp-text);
+  border: 1px solid var(--sp-border-hover);
+}
+
+.ndt-sp-cta--secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--sp-primary);
+  transform: translateY(-2px);
+}
+
+.ndt-sp-cta-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s var(--sp-timing-bounce);
+}
+
+.ndt-sp-cta:hover .ndt-sp-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* =========================================
+   SECTION 3: SERVICE SHOWCASE - GRID LAYOUT
+   ========================================= */
+
+.ndt-sp-orbit {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  min-height: 380px;
+  margin: 0 auto;
+  place-items: center;
+}
+
+/* Hide the decorative rings on the simpler grid version */
+.ndt-sp-orbit-ring {
+  display: none;
+}
+
+/* Center showcase */
+.ndt-sp-orbit-center {
+  grid-column: 2;
+  grid-row: 2;
+  width: 200px;
+  height: 200px;
+  border-radius: var(--sp-radius-lg, 20px);
+  background: linear-gradient(180deg, rgba(26, 27, 30, 0.95), rgba(14, 15, 17, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 
+    0 24px 80px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  text-align: center;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ndt-sp-orbit-center::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sp-active, #BAA2E7), transparent);
+  opacity: 0.9;
+}
+
+.ndt-sp-orbit-center:hover {
+  transform: scale(1.05);
+  border-color: rgba(186, 162, 231, 0.3);
+  box-shadow: 
+    0 32px 100px rgba(0, 0, 0, 0.8),
+    0 0 60px rgba(186, 162, 231, 0.2);
+}
+
+.ndt-sp-orbit-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: grid;
+  place-items: center;
+  margin-bottom: 0.75rem;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ndt-sp-orbit-icon svg {
+  width: 30px;
+  height: 30px;
+  color: var(--sp-active, #BAA2E7);
+  transition: color 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ndt-sp-orbit-center:hover .ndt-sp-orbit-icon {
+  background: rgba(186, 162, 231, 0.1);
+  border-color: rgba(186, 162, 231, 0.3);
+}
+
+.ndt-sp-orbit-center:hover .ndt-sp-orbit-icon svg {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.ndt-sp-orbit-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #F5F5F4;
+}
+
+.ndt-sp-orbit-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #9CA3AF;
+  line-height: 1.4;
+}
+
+/* Service pills - positioned in grid cells */
+.ndt-sp-orbit-pill {
+  padding: 0.7rem 1.2rem;
+  background: linear-gradient(135deg, rgba(26, 27, 30, 0.9), rgba(16, 17, 19, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #F5F5F4;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  white-space: nowrap;
+}
+
+.ndt-sp-orbit-pill:hover,
+.ndt-sp-orbit-pill.is-active {
+  background: rgba(26, 27, 30, 0.95);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.ndt-sp-orbit-pill.is-active {
+  border-color: var(--pill-color, #BAA2E7);
+  color: var(--pill-color, #BAA2E7);
+}
+
+/* Grid positions */
+.ndt-sp-orbit-pill--private {
+  --pill-color: #BAA2E7;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.ndt-sp-orbit-pill--day {
+  --pill-color: #7895C4;
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: start;
+}
+
+.ndt-sp-orbit-pill--board {
+  --pill-color: #9D8058;
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.ndt-sp-orbit-pill--group {
+  --pill-color: #85A894;
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: end;
+}
+
+/* =========================================
+   SECTION 4: DEEP-DIVE SERVICE CARDS
+   ========================================= */
+
+.ndt-sp-services {
+  position: relative;
+  padding: clamp(4rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem);
+  z-index: 1;
+}
+
+.ndt-sp-services-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+
+.ndt-sp-services-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sp-text-muted);
+}
+
+.ndt-sp-services-eyebrow::before,
+.ndt-sp-services-eyebrow::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sp-border-hover), transparent);
+}
+
+.ndt-sp-services-title {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ndt-sp-services-subtitle {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--sp-text-muted);
+  line-height: 1.6;
+}
+
+/* Service Cards Grid */
+.ndt-sp-services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Individual Service Card */
+.ndt-sp-service-card {
+  position: relative;
+  background: var(--sp-bg-card);
+  border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius-lg);
+  padding: 2.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s var(--sp-timing-bounce);
+  transform-style: preserve-3d;
+}
+
+.ndt-sp-service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--card-accent, var(--sp-primary));
+  opacity: 0.9;
+}
+
+.ndt-sp-service-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(186, 162, 231, 0.06), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.ndt-sp-service-card:hover::after {
+  opacity: 1;
+}
+
+.ndt-sp-service-card:hover {
+  transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 32px 80px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--card-accent, var(--sp-primary)) inset;
+}
+
+.ndt-sp-service-card--private { --card-accent: var(--sp-primary); }
+.ndt-sp-service-card--day { --card-accent: var(--sp-sky); }
+.ndt-sp-service-card--board { --card-accent: var(--sp-ochre); }
+.ndt-sp-service-card--group { --card-accent: var(--sp-sage); }
+
+/* Card Header */
+.ndt-sp-service-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.ndt-sp-service-card-icon {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: var(--sp-radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--sp-border);
+  display: grid;
+  place-items: center;
+  transition: all 0.4s var(--sp-timing-bounce);
+}
+
+.ndt-sp-service-card-icon svg {
+  width: 32px;
+  height: 32px;
+  color: var(--card-accent, var(--sp-primary));
+  transition: transform 0.4s var(--sp-timing-bounce);
+}
+
+.ndt-sp-service-card:hover .ndt-sp-service-card-icon {
+  background: rgba(186, 162, 231, 0.08);
+  border-color: var(--card-accent, var(--sp-primary));
+  transform: scale(1.05) rotate(-5deg);
+}
+
+.ndt-sp-service-card:hover .ndt-sp-service-card-icon svg {
+  transform: scale(1.1);
+}
+
+.ndt-sp-service-card-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sp-text);
+}
+
+.ndt-sp-service-card-tagline {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--sp-text-muted);
+}
+
+/* Card Meta Pills */
+.ndt-sp-service-card-meta {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.ndt-sp-service-card-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--sp-border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--sp-text-muted);
+}
+
+.ndt-sp-service-card-meta-pill svg {
+  width: 14px;
+  height: 14px;
+  color: var(--card-accent, var(--sp-primary));
+}
+
+/* Card Body */
+.ndt-sp-service-card-body {
+  margin-bottom: 1.5rem;
+}
+
+.ndt-sp-service-card-desc {
+  margin: 0 0 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--sp-text-muted);
+}
+
+/* Feature List */
+.ndt-sp-service-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ndt-sp-service-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--sp-text-muted);
+  line-height: 1.5;
+}
+
+.ndt-sp-service-feature-check {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: rgba(133, 168, 148, 0.15);
+  border: 1px solid rgba(133, 168, 148, 0.35);
+  display: grid;
+  place-items: center;
+  margin-top: 2px;
+}
+
+.ndt-sp-service-feature-check svg {
+  width: 12px;
+  height: 12px;
+  color: var(--sp-sage);
+}
+
+/* Card Footer */
+.ndt-sp-service-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--sp-border);
+}
+
+.ndt-sp-service-card-price {
+  font-size: 0.85rem;
+  color: var(--sp-text-dim);
+}
+
+.ndt-sp-service-card-price strong {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--sp-text);
+}
+
+.ndt-sp-service-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--card-accent, var(--sp-primary));
+  color: #0D0E10;
+  border: none;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s var(--sp-timing-bounce);
+}
+
+.ndt-sp-service-card-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.ndt-sp-service-card-cta svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s var(--sp-timing-bounce);
+}
+
+.ndt-sp-service-card-cta:hover svg {
+  transform: translateX(4px);
+}
+
+/* =========================================
+   SECTION 5: COMPARISON MATRIX
+   ========================================= */
+
+.ndt-sp-compare {
+  position: relative;
+  padding: clamp(4rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem);
+  background: var(--sp-bg-dark);
+  z-index: 1;
+}
+
+.ndt-sp-compare-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ndt-sp-compare-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.ndt-sp-compare-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+}
+
+.ndt-sp-compare-subtitle {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--sp-text-muted);
+}
+
+/* Comparison Table */
+.ndt-sp-compare-table {
+  width: 100%;
+  background: var(--sp-bg-card);
+  border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--sp-shadow-md);
+}
+
+.ndt-sp-compare-row {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  border-bottom: 1px solid var(--sp-border);
+}
+
+.ndt-sp-compare-row:last-child {
+  border-bottom: none;
+}
+
+.ndt-sp-compare-row--header {
+  background: var(--sp-bg-elevated);
+}
+
+.ndt-sp-compare-cell {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--sp-text-muted);
+  border-right: 1px solid var(--sp-border);
+}
+
+.ndt-sp-compare-cell:first-child {
+  justify-content: flex-start;
+  text-align: left;
+  font-weight: 600;
+  color: var(--sp-text);
+}
+
+.ndt-sp-compare-cell:last-child {
+  border-right: none;
+}
+
+.ndt-sp-compare-cell--header {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--sp-text);
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ndt-sp-compare-cell--header span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--sp-text-dim);
+}
+
+.ndt-sp-compare-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(133, 168, 148, 0.15);
+  border: 1px solid rgba(133, 168, 148, 0.35);
+  display: grid;
+  place-items: center;
+}
+
+.ndt-sp-compare-check svg {
+  width: 14px;
+  height: 14px;
+  color: var(--sp-sage);
+}
+
+.ndt-sp-compare-x {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(161, 69, 83, 0.1);
+  border: 1px solid rgba(161, 69, 83, 0.25);
+  display: grid;
+  place-items: center;
+}
+
+.ndt-sp-compare-x svg {
+  width: 12px;
+  height: 12px;
+  color: var(--sp-danger);
+}
+
+/* =========================================
+   SECTION 6: FAQ ACCORDION
+   ========================================= */
+
+.ndt-sp-faq {
+  position: relative;
+  padding: clamp(4rem, 10vh, 8rem) clamp(1.5rem, 5vw, 4rem);
+  z-index: 1;
+}
+
+.ndt-sp-faq-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ndt-sp-faq-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.ndt-sp-faq-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+}
+
+.ndt-sp-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ndt-sp-faq-item {
+  background: var(--sp-bg-card);
+  border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius-md);
+  overflow: hidden;
+  transition: all 0.4s var(--sp-timing-bounce);
+}
+
+.ndt-sp-faq-item:hover {
+  border-color: var(--sp-border-hover);
+}
+
+.ndt-sp-faq-item.is-open {
+  border-color: rgba(186, 162, 231, 0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.ndt-sp-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--sp-text);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.ndt-sp-faq-trigger:hover {
+  color: var(--sp-primary);
+}
+
+.ndt-sp-faq-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--sp-border);
+  display: grid;
+  place-items: center;
+  transition: all 0.4s var(--sp-timing-bounce);
+}
+
+.ndt-sp-faq-icon svg {
+  width: 16px;
+  height: 16px;
+  color: var(--sp-text-muted);
+  transition: transform 0.4s var(--sp-timing-bounce);
+}
+
+.ndt-sp-faq-item.is-open .ndt-sp-faq-icon {
+  background: var(--sp-primary);
+  border-color: var(--sp-primary);
+}
+
+.ndt-sp-faq-item.is-open .ndt-sp-faq-icon svg {
+  color: #0D0E10;
+  transform: rotate(180deg);
+}
+
+.ndt-sp-faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--sp-timing-smooth);
+}
+
+.ndt-sp-faq-item.is-open .ndt-sp-faq-content {
+  max-height: 500px;
+}
+
+.ndt-sp-faq-answer {
+  padding: 0 1.5rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--sp-text-muted);
+}
+
+/* =========================================
+   SECTION 7: FINAL CTA
+   ========================================= */
+
+.ndt-sp-final-cta {
+  position: relative;
+  padding: clamp(5rem, 12vh, 10rem) clamp(1.5rem, 5vw, 4rem);
+  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.ndt-sp-final-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--sp-primary-glow), transparent 60%);
+  transform: translate(-50%, -50%);
+  filter: blur(100px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.ndt-sp-final-cta-inner {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ndt-sp-final-cta-title {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ndt-sp-final-cta-text {
+  margin: 0 0 2rem;
+  font-size: 1.2rem;
+  color: var(--sp-text-muted);
+  line-height: 1.6;
+}
+
+.ndt-sp-final-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* =========================================
+   SECTION 8: RESPONSIVE - TABLET
+   ========================================= */
+
+@media (max-width: 1024px) {
+  .ndt-sp-hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3rem;
+  }
+  
+  .ndt-sp-hero-content {
+    align-items: center;
+  }
+  
+  .ndt-sp-hero-subtitle {
+    max-width: 600px;
+  }
+  
+  .ndt-sp-hero-ctas {
+    justify-content: center;
+  }
+  
+  .ndt-sp-orbit {
+    max-width: 450px;
+  }
+  
+  .ndt-sp-services-grid {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+  }
+  
+  .ndt-sp-compare-table {
+    overflow-x: auto;
+  }
+  
+  .ndt-sp-compare-row {
+    min-width: 700px;
+  }
+}
+
+/* =========================================
+   SECTION 9: RESPONSIVE - MOBILE
+   ========================================= */
+
+@media (max-width: 767px) {
+  
+  /* Hero adjustments */
+  .ndt-sp-hero {
+    min-height: auto;
+    padding: 3rem 1.25rem 2rem;
+  }
+  
+  .ndt-sp-hero-title {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+  
+  .ndt-sp-hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .ndt-sp-hero-ctas {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .ndt-sp-cta {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Orbit becomes horizontal swipe cards */
+  .ndt-sp-orbit {
+    display: none;
+  }
+  
+  .ndt-sp-mobile-swipe-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sp-text-dim);
+  }
+  
+  .ndt-sp-mobile-swipe-hint svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .ndt-sp-mobile-cards {
+    display: flex !important;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem 0.5rem 2rem;
+    margin: 0 -1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  
+  .ndt-sp-mobile-cards::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .ndt-sp-mobile-card {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+    background: var(--sp-bg-card);
+    border: 1px solid var(--sp-border);
+    border-radius: var(--sp-radius-lg);
+    padding: 1.5rem;
+    transition: all 0.4s var(--sp-timing-bounce);
+  }
+  
+  .ndt-sp-mobile-card.is-active {
+    border-color: var(--card-accent, var(--sp-primary));
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Service cards stack */
+  .ndt-sp-services {
+    padding: 3rem 1.25rem;
+  }
+  
+  .ndt-sp-services-header {
+    margin-bottom: 2rem;
+  }
+  
+  .ndt-sp-service-card {
+    padding: 1.5rem;
+  }
+  
+  .ndt-sp-service-card-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .ndt-sp-service-card-icon {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+  }
+  
+  .ndt-sp-service-card-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .ndt-sp-service-card-footer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .ndt-sp-service-card-cta {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Comparison becomes horizontal scroll */
+  .ndt-sp-compare {
+    padding: 3rem 1.25rem;
+  }
+  
+  .ndt-sp-compare-table {
+    border-radius: var(--sp-radius-md);
+  }
+  
+  .ndt-sp-compare-cell {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+  
+  /* FAQ */
+  .ndt-sp-faq {
+    padding: 3rem 1.25rem;
+  }
+  
+  .ndt-sp-faq-trigger {
+    padding: 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .ndt-sp-faq-answer {
+    padding: 0 1.25rem 1.25rem;
+    font-size: 0.95rem;
+  }
+  
+  /* Final CTA */
+  .ndt-sp-final-cta {
+    padding: 4rem 1.25rem;
+  }
+  
+  .ndt-sp-final-cta-text {
+    font-size: 1.05rem;
+  }
+  
+  .ndt-sp-final-cta-buttons {
+    flex-direction: column;
+  }
+}
+
+/* Desktop-only elements */
+.ndt-sp-mobile-cards {
+  display: none;
+}
+
+.ndt-sp-mobile-swipe-hint {
+  display: none;
+}
+
+/* Mobile bottom sheet - hidden on desktop */
+.ndt-sp-mobile-sheet {
+  display: none;
+}
+
+/* =========================================
+   SECTION 10: MOBILE BOTTOM SHEET
+   ========================================= */
+
+@media (max-width: 767px) {
+  .ndt-sp-mobile-sheet {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--sp-bg-elevated);
+    border-top: 1px solid var(--sp-border);
+    border-radius: var(--sp-radius-lg) var(--sp-radius-lg) 0 0;
+    padding: 1rem 1.25rem 2rem;
+    z-index: 100;
+    transform: translateY(calc(100% - 80px));
+    transition: transform 0.5s var(--sp-timing-bounce);
+    box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.5);
+  }
+  
+  .ndt-sp-mobile-sheet.is-expanded {
+    transform: translateY(0);
+  }
+  
+  .ndt-sp-mobile-sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--sp-border-hover);
+    border-radius: 999px;
+    margin: 0 auto 1rem;
+    cursor: grab;
+  }
+  
+  .ndt-sp-mobile-sheet-peek {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--sp-border);
+    margin-bottom: 1rem;
+  }
+  
+  .ndt-sp-mobile-sheet-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--sp-text);
+  }
+  
+  .ndt-sp-mobile-sheet-cta {
+    padding: 0.6rem 1.2rem;
+    background: var(--sp-primary);
+    color: #0D0E10;
+    border: none;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .ndt-sp-mobile-sheet-content {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .ndt-sp-mobile-sheet.is-expanded .ndt-sp-mobile-sheet-content {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .ndt-sp-mobile-sheet-nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  
+  .ndt-sp-mobile-sheet-nav-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 0.75rem;
+    background: var(--sp-bg-card);
+    border: 1px solid var(--sp-border);
+    border-radius: var(--sp-radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--sp-text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .ndt-sp-mobile-sheet-nav-btn.is-active {
+    background: var(--sp-primary);
+    border-color: var(--sp-primary);
+    color: #0D0E10;
+  }
+}
+
+/* =========================================
+   SECTION 11: ANIMATIONS
+   ========================================= */
+
+/* Entrance animations */
+.ndt-sp-animate-in {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.ndt-sp-animate-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s var(--sp-timing-smooth), transform 0.8s var(--sp-timing-bounce);
+}
+
+/* Stagger children */
+.ndt-sp-stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.ndt-sp-stagger.is-visible > *:nth-child(1) { transition-delay: 0s; }
+.ndt-sp-stagger.is-visible > *:nth-child(2) { transition-delay: 0.1s; }
+.ndt-sp-stagger.is-visible > *:nth-child(3) { transition-delay: 0.2s; }
+.ndt-sp-stagger.is-visible > *:nth-child(4) { transition-delay: 0.3s; }
+
+.ndt-sp-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s var(--sp-timing-smooth), transform 0.6s var(--sp-timing-bounce);
+}
+
+/* Floating animation */
+@keyframes sp-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.ndt-sp-float {
+  animation: sp-float 4s ease-in-out infinite;
+}
+
+/* Shimmer effect */
+@keyframes sp-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.ndt-sp-shimmer {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.05) 50%, 
+    transparent 100%);
+  background-size: 200% 100%;
+  animation: sp-shimmer 3s ease-in-out infinite;
+}
+
+/* =========================================
+   SECTION 12: REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .ndt-services-page *,
+  .ndt-services-page *::before,
+  .ndt-services-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .ndt-sp-orbit-ring {
+    animation: none;
+  }
+  
+  .ndt-sp-float {
+    animation: none;
+  }
+  
+  .ndt-sp-shimmer {
+    animation: none;
+    background: none;
+  }
+}
+
+/* =========================================
+   SECTION 13: RECOMMENDATION WIDGET
+   ========================================= */
+
+.ndt-sp-recommend {
+  background: var(--sp-bg-card);
+  border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius-lg);
+  padding: 2rem;
+  margin-top: 3rem;
+}
+
+.ndt-sp-recommend-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.ndt-sp-recommend-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.ndt-sp-recommend-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--sp-text-muted);
+}
+
+.ndt-sp-recommend-toggles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.ndt-sp-recommend-toggle-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ndt-sp-recommend-toggle-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--sp-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ndt-sp-recommend-toggle {
+  position: relative;
+  display: flex;
+  background: var(--sp-bg-deep);
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.ndt-sp-recommend-toggle-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  background: linear-gradient(135deg, var(--sp-primary), #A28DD8);
+  border-radius: 999px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ndt-sp-recommend-toggle-option {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--sp-text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.ndt-sp-recommend-toggle-option.is-active {
+  color: #0D0E10;
+}
+
+.ndt-sp-recommend-toggle-option svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ndt-sp-recommend-result {
+  background: var(--sp-bg-elevated);
+  border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius-md);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.ndt-sp-recommend-result-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sp-text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.ndt-sp-recommend-result-main {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--sp-primary);
+  margin-bottom: 0.35rem;
+}
+
+.ndt-sp-recommend-result-alt {
+  font-size: 0.95rem;
+  color: var(--sp-text-muted);
+}
+
+/* Highlighted service card state */
+.ndt-sp-service-card.is-recommended {
+  border-color: var(--card-accent, var(--sp-primary));
+  box-shadow: 
+    0 0 0 1px var(--card-accent, var(--sp-primary)),
+    0 32px 80px rgba(186, 162, 231, 0.15);
+}
+
+.ndt-sp-service-card.is-recommended::before {
+  opacity: 1;
+  height: 6px;
+}
+
+@media (max-width: 767px) {
+  .ndt-sp-recommend {
+    padding: 1.5rem 1.25rem;
+    margin-top: 2rem;
+  }
+  
+  .ndt-sp-recommend-toggles {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  
+  .ndt-sp-recommend-toggle-option {
+    padding: 0.65rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* =========================================
+   SECTION 14: ENHANCED MOBILE POLISH
+   ========================================= */
+
+@media (max-width: 767px) {
+  /* Swipe hint animation - enhanced */
+  .ndt-sp-mobile-swipe-hint {
+    animation: sp-swipe-hint 2s ease-in-out infinite;
+  }
+
+  .ndt-sp-mobile-swipe-hint svg {
+    animation: sp-swipe-arrow 1.5s ease-in-out infinite;
+  }
+
+  @keyframes sp-swipe-hint {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes sp-swipe-arrow {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+
+  /* Mobile card active state glow */
+  .ndt-sp-mobile-card.is-active {
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(186, 162, 231, 0.2);
+  }
+
+  .ndt-sp-mobile-card.is-active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--sp-primary));
+    border-radius: var(--sp-radius-lg) var(--sp-radius-lg) 0 0;
+  }
+
+  /* Pull-to-refresh style header */
+  .ndt-sp-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(180deg, 
+      rgba(186, 162, 231, 0.08) 0%, 
+      transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Service card expansion button styling handled in JS */
+  .ndt-sp-service-card-expand:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(186, 162, 231, 0.3);
+    color: var(--sp-primary);
+  }
+
+  /* Smooth snap feeling */
+  .ndt-sp-mobile-cards {
+    scroll-padding: 16px;
+    scroll-behavior: smooth;
+  }
+
+  /* Better touch targets */
+  .ndt-sp-faq-trigger {
+    min-height: 60px;
+  }
+
+  .ndt-sp-mobile-sheet-nav-btn {
+    min-height: 48px;
+  }
+}
+
+/* =========================================
+   SECTION 15: MICRO-INTERACTIONS
+   ========================================= */
+
+/* Service card icon micro-animation */
+.ndt-sp-service-card-icon svg path,
+.ndt-sp-service-card-icon svg circle {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.ndt-sp-service-card:hover .ndt-sp-service-card-icon svg path,
+.ndt-sp-service-card:hover .ndt-sp-service-card-icon svg circle {
+  stroke-dashoffset: 0;
+}
+
+/* Feature check animation */
+.ndt-sp-service-feature-check {
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.ndt-sp-service-feature:hover .ndt-sp-service-feature-check {
+  transform: scale(1.15);
+}
+
+/* CTA button shine effect */
+.ndt-sp-cta--primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.ndt-sp-cta--primary:hover::before {
+  left: 100%;
+}
+
+/* Orbit pill hover glow */
+.ndt-sp-orbit-pill::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: var(--pill-color, var(--sp-primary));
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.ndt-sp-orbit-pill:hover::before,
+.ndt-sp-orbit-pill.is-active::before {
+  opacity: 0.3;
+}
+
+/* Compare table row hover slide */
+.ndt-sp-compare-row:not(.ndt-sp-compare-row--header) {
+  position: relative;
+}
+
+.ndt-sp-compare-row:not(.ndt-sp-compare-row--header)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--sp-primary);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.ndt-sp-compare-row:not(.ndt-sp-compare-row--header):hover::before {
+  transform: scaleY(1);
+}
+
+/* FAQ icon rotation micro-interaction */
+.ndt-sp-faq-trigger:hover .ndt-sp-faq-icon {
+  transform: translateY(-2px);
+  background: rgba(186, 162, 231, 0.1);
+  border-color: rgba(186, 162, 231, 0.3);
+}
+
+/* =========================================
+   SECTION 16: ACCESSIBILITY ENHANCEMENTS
+   ========================================= */
+
+/* Focus visible states */
+.ndt-sp-cta:focus-visible,
+.ndt-sp-orbit-pill:focus-visible,
+.ndt-sp-service-card-cta:focus-visible,
+.ndt-sp-faq-trigger:focus-visible,
+.ndt-sp-mobile-sheet-nav-btn:focus-visible {
+  outline: 2px solid var(--sp-primary);
+  outline-offset: 3px;
+}
+
+/* Skip link */
+.ndt-sp-skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem 2rem;
+  background: var(--sp-primary);
+  color: #0D0E10;
+  font-weight: 700;
+  border-radius: var(--sp-radius-md);
+  z-index: 9999;
+  transition: top 0.3s ease;
+}
+
+.ndt-sp-skip-link:focus {
+  top: 20px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .ndt-sp-service-card {
+    border-width: 2px;
+  }
+  
+  .ndt-sp-compare-row {
+    border-bottom-width: 2px;
+  }
+  
+  .ndt-sp-cta--primary {
+    border: 2px solid #000;
+  }
+}
+
+/* =========================================
+   SECTION 17: PRINT STYLES
+   ========================================= */
+
+@media print {
+  .ndt-sp-ambient,
+  .ndt-sp-orbit,
+  .ndt-sp-mobile-sheet,
+  .ndt-sp-mobile-cards {
+    display: none !important;
+  }
+  
+  .ndt-services-page {
+    background: white;
+    color: black;
+  }
+  
+  .ndt-sp-service-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+  
+  .ndt-sp-hero {
+    min-height: auto;
+    padding: 2rem;
+  }
+  
+  .ndt-sp-cta {
+    border: 1px solid #333;
+    background: #eee !important;
+    color: #000 !important;
+  }
+}
+
+/* =========================================
+   NDT SERVICES PAGE – END
+   ========================================= */
+
