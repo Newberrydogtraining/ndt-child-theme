@@ -228,59 +228,106 @@
     const centerDesc = center?.querySelector('.ndt-sp-orbit-desc');
 
     let activeService = 'private';
+    let isAnimating = false;
+    let pendingService = null;
 
-    function updateOrbitCenter(serviceKey) {
+    function updateOrbitCenter(serviceKey, force = false) {
       const service = SERVICES[serviceKey];
       if (!service || !center) return;
+      
+      // Prevent rapid switching that causes glitches
+      if (serviceKey === activeService && !force) return;
+      
+      // If already animating, queue this service
+      if (isAnimating && !force) {
+        pendingService = serviceKey;
+        return;
+      }
 
+      isAnimating = true;
       activeService = serviceKey;
       page.dataset.activeService = serviceKey;
 
-      // Update pills
+      // Update pills immediately (no animation lag)
       pills.forEach(pill => {
         const key = pill.dataset.service;
         pill.classList.toggle('is-active', key === serviceKey);
       });
 
-      // Animate center content
+      // Update center accent color
+      if (center) {
+        center.style.setProperty('--sp-active', service.color);
+      }
+
+      // Animate center content with GSAP
       if (window.gsap && !prefersReducedMotion()) {
-        const tl = gsap.timeline();
+        // Kill any existing animations to prevent conflicts
+        gsap.killTweensOf([centerIcon, centerTitle, centerDesc]);
+        
+        const tl = gsap.timeline({
+          onComplete: () => {
+            isAnimating = false;
+            // Process pending service if one was queued
+            if (pendingService && pendingService !== activeService) {
+              const pending = pendingService;
+              pendingService = null;
+              updateOrbitCenter(pending);
+            }
+          }
+        });
         
         tl.to([centerIcon, centerTitle, centerDesc], {
           opacity: 0,
-          y: -10,
-          duration: 0.2,
-          stagger: 0.05,
-          ease: 'power2.in'
+          y: -8,
+          duration: 0.15,
+          stagger: 0.03,
+          ease: 'power2.in',
+          overwrite: true
         })
         .call(() => {
           if (centerTitle) centerTitle.textContent = service.name;
           if (centerDesc) centerDesc.textContent = service.tagline;
           if (centerIcon) {
             centerIcon.innerHTML = getServiceIconSVG(serviceKey);
-            centerIcon.querySelector('svg').style.color = service.color;
+            const svg = centerIcon.querySelector('svg');
+            if (svg) svg.style.color = service.color;
           }
         })
         .to([centerIcon, centerTitle, centerDesc], {
           opacity: 1,
           y: 0,
-          duration: 0.3,
-          stagger: 0.05,
+          duration: 0.25,
+          stagger: 0.03,
           ease: 'power2.out'
         });
       } else {
+        // No GSAP - instant update
         if (centerTitle) centerTitle.textContent = service.name;
         if (centerDesc) centerDesc.textContent = service.tagline;
         if (centerIcon) {
           centerIcon.innerHTML = getServiceIconSVG(serviceKey);
-          centerIcon.querySelector('svg').style.color = service.color;
+          const svg = centerIcon.querySelector('svg');
+          if (svg) svg.style.color = service.color;
         }
+        isAnimating = false;
       }
     }
 
-    // Pill click handlers
+    // Debounced hover handler to prevent rapid firing
+    let hoverTimeout = null;
+    function handlePillHover(serviceKey) {
+      clearTimeout(hoverTimeout);
+      hoverTimeout = setTimeout(() => {
+        if (serviceKey && SERVICES[serviceKey] && serviceKey !== activeService) {
+          updateOrbitCenter(serviceKey);
+        }
+      }, 80); // Small delay prevents flicker
+    }
+
+    // Pill click and hover handlers
     pills.forEach(pill => {
       pill.addEventListener('click', () => {
+        clearTimeout(hoverTimeout);
         const serviceKey = pill.dataset.service;
         if (serviceKey && SERVICES[serviceKey]) {
           updateOrbitCenter(serviceKey);
@@ -289,9 +336,11 @@
 
       pill.addEventListener('mouseenter', () => {
         const serviceKey = pill.dataset.service;
-        if (serviceKey && SERVICES[serviceKey]) {
-          updateOrbitCenter(serviceKey);
-        }
+        handlePillHover(serviceKey);
+      });
+      
+      pill.addEventListener('mouseleave', () => {
+        clearTimeout(hoverTimeout);
       });
     });
 
@@ -1247,4 +1296,5 @@
 // =========================================
 // NDT SERVICES PAGE – END
 // =========================================
+
 

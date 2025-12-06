@@ -1130,6 +1130,401 @@
 }
 
 /* =========================================
+   ELEMENTOR RED KILL – NUCLEAR OPTION
+   ========================================= */
+
+/* Kill ALL Elementor red colors on the services page */
+.ndt-services-page,
+.ndt-services-page *,
+.ndt-services-page *::before,
+.ndt-services-page *::after,
+.ndt-sp-recommend,
+.ndt-sp-recommend *,
+.ndt-sp-orbit,
+.ndt-sp-orbit *,
+.ndt-sp-hero,
+.ndt-sp-hero * {
+  --e-global-color-primary: #BAA2E7 !important;
+  --e-global-color-secondary: #7895C4 !important;
+  --e-global-color-text: #F5F5F4 !important;
+  --e-global-color-accent: #BAA2E7 !important;
+}
+
+/* Kill red text everywhere */
+.ndt-services-page [style*="color: red"],
+.ndt-services-page [style*="color:#ff"],
+.ndt-services-page [style*="color: #ff"],
+.ndt-services-page [style*="color:#f00"],
+.ndt-services-page [style*="color: #f00"],
+.ndt-services-page [style*="color:#FF"],
+.ndt-services-page [style*="color: #FF"],
+.ndt-services-page [style*="color:#F00"],
+.ndt-services-page [style*="color: #F00"] {
+  color: inherit !important;
+}
+
+/* Kill red backgrounds */
+.ndt-services-page [style*="background-color: red"],
+.ndt-services-page [style*="background:#ff"],
+.ndt-services-page [style*="background: #ff"],
+.ndt-services-page [style*="background-color:#ff"],
+.ndt-services-page [style*="background-color: #ff"] {
+  background-color: transparent !important;
+}
+
+/* Force proper colors on all buttons and interactive elements */
+.ndt-services-page button,
+.ndt-services-page .elementor-button,
+.ndt-services-page a.elementor-button,
+.ndt-sp-recommend button,
+.ndt-sp-recommend-toggle-option,
+.ndt-sp-orbit-pill {
+  color: #F5F5F4 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  background: linear-gradient(135deg, rgba(26, 27, 30, 0.9), rgba(16, 17, 19, 0.9)) !important;
+}
+
+.ndt-services-page button:hover,
+.ndt-services-page .elementor-button:hover,
+.ndt-sp-recommend-toggle-option:hover {
+  color: #F5F5F4 !important;
+  border-color: rgba(186, 162, 231, 0.4) !important;
+}
+
+/* Active toggle buttons should be purple */
+.ndt-sp-recommend-toggle-option.is-active,
+.ndt-services-page button.is-active {
+  background: linear-gradient(135deg, #BAA2E7, #A28DD8) !important;
+  color: #0D0E10 !important;
+  border-color: #BAA2E7 !important;
+}
+
+/* Orbit pills with proper accent colors */
+.ndt-sp-orbit-pill--private,
+.ndt-sp-orbit-pill--private:hover {
+  color: #F5F5F4 !important;
+}
+.ndt-sp-orbit-pill--private.is-active {
+  color: #BAA2E7 !important;
+  border-color: #BAA2E7 !important;
+}
+
+.ndt-sp-orbit-pill--day,
+.ndt-sp-orbit-pill--day:hover {
+  color: #F5F5F4 !important;
+}
+.ndt-sp-orbit-pill--day.is-active {
+  color: #7895C4 !important;
+  border-color: #7895C4 !important;
+}
+
+.ndt-sp-orbit-pill--board,
+.ndt-sp-orbit-pill--board:hover {
+  color: #F5F5F4 !important;
+}
+.ndt-sp-orbit-pill--board.is-active {
+  color: #9D8058 !important;
+  border-color: #9D8058 !important;
+}
+
+.ndt-sp-orbit-pill--group,
+.ndt-sp-orbit-pill--group:hover {
+  color: #F5F5F4 !important;
+}
+.ndt-sp-orbit-pill--group.is-active {
+  color: #85A894 !important;
+  border-color: #85A894 !important;
+}
+
+/* =========================================
+   RECOMMENDATION WIDGET – COMPLETE STYLING
+   ========================================= */
+
+.ndt-sp-recommend {
+  background: linear-gradient(180deg, rgba(18, 20, 26, 0.98), rgba(11, 12, 14, 0.99)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 24px !important;
+  padding: 2rem !important;
+  margin: 2rem auto !important;
+  max-width: 900px !important;
+  color: #F5F5F4 !important;
+}
+
+.ndt-sp-recommend * {
+  color: inherit !important;
+}
+
+.ndt-sp-recommend-header {
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+}
+
+.ndt-sp-recommend-title {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #F5F5F4 !important;
+  margin: 0 0 0.5rem !important;
+}
+
+.ndt-sp-recommend-subtitle {
+  font-size: 1rem !important;
+  color: #9CA3AF !important;
+  margin: 0 !important;
+}
+
+.ndt-sp-recommend-toggles {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1.5rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.ndt-sp-recommend-toggle-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+}
+
+.ndt-sp-recommend-toggle-label {
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #6B7280 !important;
+}
+
+.ndt-sp-recommend-toggle {
+  position: relative !important;
+  display: flex !important;
+  background: rgba(5, 6, 7, 0.8) !important;
+  border-radius: 999px !important;
+  padding: 4px !important;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+.ndt-sp-recommend-toggle-thumb {
+  position: absolute !important;
+  top: 4px !important;
+  left: 4px !important;
+  bottom: 4px !important;
+  width: calc(33.333% - 3px) !important;
+  background: linear-gradient(135deg, #BAA2E7, #A28DD8) !important;
+  border-radius: 999px !important;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s ease !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+.ndt-sp-recommend-toggle-option {
+  flex: 1 !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.4rem !important;
+  padding: 0.75rem 0.5rem !important;
+  background: transparent !important;
+  border: none !important;
+  color: #9CA3AF !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: color 0.3s ease !important;
+}
+
+.ndt-sp-recommend-toggle-option:hover {
+  color: #D1D5DB !important;
+}
+
+.ndt-sp-recommend-toggle-option.is-active {
+  color: #0D0E10 !important;
+  background: transparent !important;
+}
+
+.ndt-sp-recommend-toggle-option svg {
+  width: 16px !important;
+  height: 16px !important;
+  color: inherit !important;
+}
+
+.ndt-sp-recommend-result {
+  background: rgba(26, 29, 36, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 16px !important;
+  padding: 1.5rem !important;
+  text-align: center !important;
+}
+
+.ndt-sp-recommend-result-label {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: #6B7280 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.ndt-sp-recommend-result-main {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #BAA2E7 !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.ndt-sp-recommend-result-alt {
+  font-size: 0.95rem !important;
+  color: #9CA3AF !important;
+}
+
+@media (max-width: 767px) {
+  .ndt-sp-recommend-toggles {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .ndt-sp-recommend-toggle-option {
+    padding: 0.65rem 0.4rem !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+/* =========================================
+   BACKGROUND FADE TO BLACK – ALL EDGES
+   ========================================= */
+
+/* Page wrapper with edge fade */
+.ndt-services-page {
+  background: 
+    linear-gradient(to bottom, #050607 0%, transparent 5%, transparent 95%, #050607 100%),
+    linear-gradient(to right, #050607 0%, transparent 8%, transparent 92%, #050607 100%),
+    #050607 !important;
+}
+
+/* Softer ambient with better fade */
+.ndt-sp-ambient {
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 10%, transparent 80%) !important;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, black 10%, transparent 80%) !important;
+}
+
+.ndt-sp-ambient-orb--primary {
+  opacity: 0.08 !important;
+}
+
+.ndt-sp-ambient-orb--secondary {
+  opacity: 0.05 !important;
+}
+
+/* Add fade overlays on edges */
+.ndt-services-page::before {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 150px !important;
+  background: linear-gradient(to bottom, #050607 0%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+}
+
+.ndt-services-page::after {
+  content: '' !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 150px !important;
+  background: linear-gradient(to top, #050607 0%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+}
+
+/* Side fade via pseudo-elements on content wrapper */
+.ndt-sp-hero::before {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  width: 100px !important;
+  background: linear-gradient(to right, #050607 0%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+}
+
+.ndt-sp-hero::after {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100px !important;
+  background: linear-gradient(to left, #050607 0%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+}
+
+/* =========================================
+   ORBIT ANTI-GLITCH + SMOOTH TRANSITIONS
+   ========================================= */
+
+/* Prevent flash/glitch on service switching */
+.ndt-sp-orbit,
+.ndt-sp-orbit-center,
+.ndt-sp-orbit-pill {
+  will-change: transform !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
+}
+
+.ndt-sp-orbit-center {
+  transform: translateZ(0) !important;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              box-shadow 0.5s ease,
+              border-color 0.3s ease !important;
+}
+
+.ndt-sp-orbit-icon,
+.ndt-sp-orbit-title,
+.ndt-sp-orbit-desc {
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+  will-change: opacity, transform !important;
+}
+
+/* Smooth pill hover without flash */
+.ndt-sp-orbit-pill {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.4s ease,
+              color 0.3s ease !important;
+}
+
+/* Prevent layout shift during updates */
+.ndt-sp-orbit-center * {
+  transform-style: flat !important;
+}
+
+/* =========================================
+   SERVICE CARDS SECTION – REDUCE GAP
+   ========================================= */
+
+.ndt-sp-services {
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+
+.ndt-sp-services-header {
+  margin-bottom: 2rem !important;
+}
+
+.ndt-sp-services-grid {
+  gap: 1.5rem !important;
+}
+
+/* =========================================
    SERVICES PAGE – END
    ========================================= */
 
