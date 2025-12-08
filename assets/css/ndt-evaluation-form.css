@@ -1,0 +1,714 @@
+/* =========================================
+   NDT · Evaluation modal shell
+   ========================================= */
+
+#ndt-eval-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: transparent;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.24s ease, visibility 0.24s ease;
+  overflow: auto;
+}
+
+#ndt-eval-modal.ndt-eval-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.ndt-eval-lock {
+  overflow: hidden;
+}
+
+#ndt-eval-modal {
+  position: fixed;
+}
+
+#ndt-eval-modal .ndt-eval-backdrop {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      180deg,
+      rgba(11, 12, 14, 0.88),
+      rgba(11, 12, 14, 0.78)
+    ),
+    rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+#ndt-eval-modal .ndt-eval-dialog {
+  position: relative;
+  max-width: 640px;
+  width: min(100%, 720px);
+  margin: auto;
+  background: var(--ndt-bg-light, #1A1B1E);
+  color: var(--ndt-text, #F5F5F4);
+  border-radius: 18px;
+  border: 1px solid var(--ndt-border, #2E3138);
+  box-shadow:
+    0 22px 54px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(186, 162, 231, 0.06) inset;
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1rem, 2.5vw, 1.5rem);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  touch-action: pan-y;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+#ndt-eval-modal .fluent_form_5 {
+  position: relative;
+}
+
+/* Header row: progress bar + close button */
+#ndt-eval-modal .ndt-eval-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+#ndt-eval-modal .ndt-eval-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--ndt-text-muted, #BFC4BB);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: 300;
+  line-height: 1;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: color 0.2s ease, text-shadow 0.2s ease, background 0.2s ease;
+  padding: 0;
+  margin: 0;
+}
+
+#ndt-eval-modal .ndt-eval-close:hover,
+#ndt-eval-modal .ndt-eval-close:focus-visible {
+  color: var(--ndt-text, #F5F5F4);
+  text-shadow: 0 2px 10px rgba(186, 162, 231, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  outline: none;
+}
+
+/* =========================================
+   Form headings & helper text
+   ========================================= */
+
+#ndt-eval-modal .fluent_form_5 h2 {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+  line-height: 1.25;
+  color: var(--ndt-text, #F5F5F4);
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-el-input--label label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ndt-text, #F5F5F4);
+  margin-bottom: 0.35rem;
+}
+
+#ndt-eval-modal .fluent_form_5 p {
+  color: var(--ndt-text-muted, #BFC4BB);
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+/* =========================================
+   Inputs & textareas
+   ========================================= */
+
+#ndt-eval-modal .fluent_form_5 .ff-el-form-control,
+#ndt-eval-modal .fluent_form_5 input.ff-el-form-control,
+#ndt-eval-modal .fluent_form_5 textarea.ff-el-form-control,
+#ndt-eval-modal .fluent_form_5 input[type="text"],
+#ndt-eval-modal .fluent_form_5 input[type="email"],
+#ndt-eval-modal .fluent_form_5 input[type="tel"],
+#ndt-eval-modal .fluent_form_5 input[type="number"],
+#ndt-eval-modal .fluent_form_5 input[type="url"],
+#ndt-eval-modal .fluent_form_5 textarea {
+  width: 100%;
+  background-color: var(--ndt-bg, #101113) !important;
+  color: var(--ndt-text, #F5F5F4) !important;
+  border: 1px solid var(--ndt-border-muted, #26282C) !important;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  outline: none;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-clip: padding-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Prevent autofill from changing colors */
+#ndt-eval-modal .fluent_form_5 input:-webkit-autofill,
+#ndt-eval-modal .fluent_form_5 input:-webkit-autofill:hover,
+#ndt-eval-modal .fluent_form_5 input:-webkit-autofill:focus,
+#ndt-eval-modal .fluent_form_5 input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--ndt-bg, #101113) inset !important;
+  -webkit-text-fill-color: var(--ndt-text, #F5F5F4) !important;
+  box-shadow: 0 0 0 1000px var(--ndt-bg, #101113) inset !important;
+  caret-color: var(--ndt-text, #F5F5F4) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+#ndt-eval-modal .fluent_form_5 textarea.ff-el-form-control {
+  border-radius: 18px;
+  min-height: 110px;
+  resize: vertical;
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-el-form-control::placeholder {
+  color: var(--ndt-text-muted, #BFC4BB);
+  opacity: 1;
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-el-form-control:focus,
+#ndt-eval-modal .fluent_form_5 .ff-el-form-control:focus-visible {
+  border-color: var(--ndt-primary, #BAA2E7);
+  box-shadow: 0 0 0 2px rgba(186, 162, 231, 0.22);
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-el-is-error .ff-el-form-control {
+  border-color: var(--ndt-danger, #A14553);
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-el-is-error .ff-el-error-message {
+  color: var(--ndt-danger, #A14553);
+  font-size: 0.82rem;
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-el-group .ff-el-input--content {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* =========================================
+   Pills: behavior & contact
+   ========================================= */
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--label,
+#ndt-eval-modal .fluent_form_5 .ndt-contact-method .ff-el-input--label {
+  display: none;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0.65rem;
+  background: rgba(16, 17, 19, 0.6);
+  border: 1px solid var(--ndt-border-muted, #26282C);
+  border-radius: 14px;
+  width: 100%;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-contact-method .ff-el-input--content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior input[type="radio"],
+#ndt-eval-modal .fluent_form_5 .ndt-contact-method input[type="radio"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  clip: rect(0, 0, 0, 0) !important;
+  overflow: hidden !important;
+}
+
+/* Kill any white artifacts from Fluent Forms */
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label *,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label::before,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label::after {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  background: rgba(26, 27, 30, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: var(--ndt-text-muted, #BFC4BB) !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.35;
+  min-height: 0;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Colored dot indicator before each label */
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label::before {
+  content: '' !important;
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+/* Row 1 (items 1-3): Purple */
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(1)::before,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(2)::before,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(3)::before {
+  background: #BAA2E7 !important;
+}
+
+/* Row 2 (items 4-6): Blue */
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(4)::before,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(5)::before,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(6)::before {
+  background: #7895C4 !important;
+}
+
+/* Row 3 (items 7-9): Ochre/Green */
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(7)::before,
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(8)::before {
+  background: #9D8058 !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content > label:nth-child(9)::before {
+  background: #85A894 !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-contact-method label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  background: var(--ndt-bg, #101113) !important;
+  border: 1px solid var(--ndt-border-muted, #26282C) !important;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: var(--ndt-text, #F5F5F4) !important;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+  white-space: nowrap;
+  box-shadow: none !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: var(--ndt-text, #F5F5F4) !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label:hover::before {
+  transform: scale(1.3);
+  filter: brightness(1.2);
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-contact-method label:hover {
+  border-color: var(--ndt-highlight, #40454F) !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label.ndt-checked {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(186, 162, 231, 0.4) !important;
+  color: var(--ndt-text, #F5F5F4) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior label.ndt-checked::before {
+  transform: scale(1.5);
+  filter: brightness(1.3);
+  box-shadow: 0 0 8px currentColor;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-contact-method label.ndt-checked {
+  border-color: var(--ndt-primary, #BAA2E7) !important;
+  background: rgba(186, 162, 231, 0.12) !important;
+  color: var(--ndt-text, #F5F5F4) !important;
+}
+
+/* Extra overrides to kill white corners */
+#ndt-eval-modal .fluent_form_5 .ff-el-form-check,
+#ndt-eval-modal .fluent_form_5 .ff-el-form-check label,
+#ndt-eval-modal .fluent_form_5 .ff_t_container,
+#ndt-eval-modal .fluent_form_5 .ff-el-form-check-input {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-main-behavior {
+  margin-top: 0.25rem;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-specify {
+  display: none;
+  margin-top: 0.5rem;
+  animation: ndt-specify-fade-in 0.25s ease;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-specify.ndt-specify-visible {
+  display: block;
+}
+
+@keyframes ndt-specify-fade-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-specify .ff-el-form-control,
+#ndt-eval-modal .fluent_form_5 .ndt-specify textarea {
+  border-radius: 12px !important;
+  min-height: 70px;
+}
+
+/* =========================================
+   Custom select (start timing)
+   ========================================= */
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-wrapper {
+  position: relative;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-wrapper select.ff-el-form-control {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-trigger {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ndt-bg, #101113);
+  color: var(--ndt-text, #F5F5F4);
+  padding: 0.7rem 2.6rem 0.7rem 1rem;
+  font-size: 0.95rem;
+  text-align: left;
+  box-shadow: 0 0 0 1px var(--ndt-border-muted, #26282C) inset;
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow 0.2s ease, color 0.2s ease;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-trigger.ndt-placeholder {
+  color: var(--ndt-text-muted, #BFC4BB);
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-trigger:hover {
+  box-shadow: 0 0 0 1px var(--ndt-highlight, #40454F) inset;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-trigger:focus-visible,
+#ndt-eval-modal .fluent_form_5 .ndt-select-trigger.ndt-open {
+  outline: none;
+  box-shadow:
+    0 0 0 1px var(--ndt-primary, #BAA2E7) inset,
+    0 0 0 4px rgba(186, 162, 231, 0.24);
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-trigger::after {
+  content: '';
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23BFC4BB' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.2s ease;
+  pointer-events: none;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-trigger.ndt-open::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: var(--ndt-bg-light, #1A1B1E);
+  border: 1px solid var(--ndt-border, #2E3138);
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65);
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 1000;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-dropdown.ndt-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-option {
+  padding: 0.65rem 1rem;
+  color: var(--ndt-text, #F5F5F4);
+  border-radius: 999px;
+  border: 1px solid var(--ndt-border-muted, #26282C);
+  background: var(--ndt-bg, #101113);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.14s ease, border-color 0.14s ease;
+  margin-bottom: 0.35rem;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-option:last-child {
+  margin-bottom: 0;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-option:hover,
+#ndt-eval-modal .fluent_form_5 .ndt-select-option.ndt-selected {
+  background: rgba(186, 162, 231, 0.12);
+  border-color: var(--ndt-primary, #BAA2E7);
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-option.ndt-placeholder-option {
+  display: none;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-select-dropdown::-webkit-scrollbar-thumb {
+  background: var(--ndt-highlight, #40454F);
+  border-radius: 4px;
+}
+
+/* =========================================
+   Progress bar (inline with close button)
+   ========================================= */
+
+#ndt-eval-modal .ndt-eval-progress {
+  flex: 1;
+  min-width: 0;
+}
+
+#ndt-eval-modal .ndt-eval-progress-track {
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--ndt-highlight, #40454F);
+  overflow: hidden;
+}
+
+#ndt-eval-modal .ndt-eval-progress-fill {
+  width: 33.33%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ndt-primary, #BAA2E7), var(--ndt-primary-hover, #A28DD8));
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide Fluent Forms default progress elements */
+#ndt-eval-modal .fluent_form_5 .ff-el-progress,
+#ndt-eval-modal .fluent_form_5 .ff-el-progress-status,
+#ndt-eval-modal .fluent_form_5 .ff-step-titles {
+  display: none !important;
+}
+
+/* =========================================
+   Step transition animations
+   ========================================= */
+
+/* Step containers - fly in from right */
+#ndt-eval-modal .fluent_form_5 .ff-step-container {
+  animation: ndt-step-fly-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes ndt-step-fly-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Going back - fly in from left */
+#ndt-eval-modal .fluent_form_5 .ff-step-container.ndt-step-back {
+  animation: ndt-step-fly-back 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes ndt-step-fly-back {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =========================================
+   Buttons (next / prev / submit)
+   ========================================= */
+
+#ndt-eval-modal .fluent_form_5 .ff-btn {
+  border-radius: 999px !important;
+  font-weight: 600;
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-btn-submit,
+#ndt-eval-modal .fluent_form_5 .ff-btn-next {
+  background: var(--ndt-primary, #BAA2E7) !important;
+  color: var(--ndt-text-on-primary, #111317) !important;
+  border: 1px solid rgba(186, 162, 231, 0.5) !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-btn-submit:hover,
+#ndt-eval-modal .fluent_form_5 .ff-btn-next:hover {
+  background: var(--ndt-primary-hover, #A28DD8) !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-btn-prev {
+  background: transparent !important;
+  color: var(--ndt-text-muted, #BFC4BB) !important;
+  border: 1px solid var(--ndt-border-muted, #26282C) !important;
+}
+
+#ndt-eval-modal .fluent_form_5 .ff-btn-prev:hover {
+  color: var(--ndt-text, #F5F5F4) !important;
+  border-color: var(--ndt-highlight, #40454F) !important;
+}
+
+/* =========================================
+   Footer note
+   ========================================= */
+
+#ndt-eval-modal .fluent_form_5 .ndt-eval-footer-note {
+  margin-top: 0.8rem;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ndt-text-muted, #BFC4BB);
+}
+
+#ndt-eval-modal .fluent_form_5 .ndt-eval-footer-note p {
+  margin: 0 0 0.25rem;
+}
+
+/* =========================================
+   Mobile adjustments
+   ========================================= */
+
+/* Reduce spacing throughout form */
+#ndt-eval-modal .fluent_form_5 .ff-el-group {
+  margin-bottom: 0.6rem;
+}
+
+#ndt-eval-modal .fluent_form_5 h2 {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+}
+
+#ndt-eval-modal .fluent_form_5 p {
+  margin: 0 0 0.4rem;
+  font-size: 0.88rem;
+}
+
+#ndt-eval-modal .fluent_form_5 textarea.ff-el-form-control {
+  min-height: 80px;
+}
+
+@media (max-width: 768px) {
+  #ndt-eval-modal {
+    align-items: flex-start;
+    padding: 0.75rem;
+  }
+
+  #ndt-eval-modal .ndt-eval-dialog {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0.25rem;
+    padding: 1rem 0.9rem 1.1rem;
+    max-height: calc(100vh - 1.2rem);
+    overflow: auto;
+  }
+
+  #ndt-eval-modal .ndt-eval-header {
+    margin-bottom: 0.75rem;
+  }
+
+  #ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+    padding: 0.5rem;
+  }
+
+  #ndt-eval-modal .fluent_form_5 .ndt-main-behavior label {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.55rem;
+  }
+
+  #ndt-eval-modal .fluent_form_5 .ndt-main-behavior label::before {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (max-width: 520px) {
+  #ndt-eval-modal .fluent_form_5 .ndt-main-behavior .ff-el-input--content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  #ndt-eval-modal .fluent_form_5 .ndt-main-behavior label {
+    font-size: 0.82rem;
+  }
+
+  #ndt-eval-modal .fluent_form_5 .ndt-contact-method label {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.9rem;
+  }
+}
+
+

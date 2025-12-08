@@ -1,0 +1,448 @@
+/* =========================================
+   NDT · About Hero Video Scroll
+   ========================================= */
+
+#ndt-about-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: clamp(2.4rem, 6vh, 3.6rem) clamp(1.4rem, 4vw, 3.2rem);
+  background: var(--bg-dark, #0B0C0E);
+  color: var(--text, #F5F5F4);
+}
+
+#ndt-about-hero .ndt-about-hero-inner {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.6rem, 4vw, 3.2rem);
+  align-items: center;
+}
+
+.ndt-about-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.8rem, 2vw, 1.4rem);
+  max-width: 640px;
+}
+
+.ndt-about-hero-heading {
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
+  line-height: 1.08;
+  color: var(--text, #F5F5F4);
+}
+
+.ndt-about-hero-body,
+.ndt-about-hero-location {
+  margin: 0;
+  color: var(--text-muted, #BFC4BB);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.ndt-about-hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--primary, #BAA2E7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.ndt-about-hero-link:hover,
+.ndt-about-hero-link:focus-visible {
+  color: var(--primary-hover, #A28DD8);
+}
+
+.ndt-about-hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.ndt-about-wall {
+  position: relative;
+  width: 100%;
+  max-width: clamp(340px, 46vw, 640px);
+  padding: clamp(0.6rem, 1.2vw, 1rem);
+  background: linear-gradient(180deg, var(--bg, #101113), var(--bg-dark, #0B0C0E));
+  border-radius: 22px;
+  border: 1px solid var(--border, #2E3138);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+}
+
+.ndt-about-frame {
+  position: sticky;
+  top: clamp(1.2rem, 8vh, 3.4rem);
+}
+
+.ndt-about-frame-inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--border, #2E3138);
+  background: var(--bg-light, #1A1B1E);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+}
+
+.ndt-about-frame-video,
+.ndt-about-frame-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.ndt-about-dog-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ndt-about-dog-image {
+  position: absolute;
+  right: clamp(-5%, -2vw, -2%);
+  bottom: clamp(-9%, -4vw, -2%);
+  width: clamp(240px, 40vw, 460px);
+  max-width: 120%;
+  height: auto;
+  filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.65));
+}
+
+@media (max-width: 1024px) {
+  #ndt-about-hero {
+    min-height: auto;
+    padding: clamp(1.8rem, 5vw, 2.6rem) clamp(1.2rem, 4vw, 2rem);
+  }
+
+  #ndt-about-hero .ndt-about-hero-inner {
+    grid-template-columns: 1fr;
+    gap: clamp(1.2rem, 3vw, 2rem);
+    align-items: start;
+  }
+
+  .ndt-about-hero-visual {
+    order: -1;
+  }
+
+  .ndt-about-frame {
+    position: relative;
+    top: auto;
+  }
+
+  .ndt-about-frame-inner {
+    aspect-ratio: 4 / 5;
+  }
+
+  .ndt-about-frame-video,
+  .ndt-about-frame-image {
+    object-position: center center;
+  }
+
+  .ndt-about-dog-image {
+    right: clamp(-2%, 1vw, 6%);
+    bottom: clamp(-4%, 1vw, 4%);
+    width: clamp(220px, 64vw, 360px);
+  }
+}
+
+@media (max-width: 640px) {
+  #ndt-about-hero {
+    padding: 1.4rem 1rem 1.8rem;
+  }
+
+  .ndt-about-wall {
+    padding: clamp(0.45rem, 2vw, 0.7rem);
+  }
+
+  .ndt-about-frame-inner {
+    border-radius: 14px;
+    box-shadow:
+      0 10px 24px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  }
+
+  .ndt-about-hero-heading {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+  }
+
+  .ndt-about-hero-body,
+  .ndt-about-hero-location {
+    font-size: 0.96rem;
+  }
+
+  .ndt-about-dog-image {
+    right: 0;
+    bottom: clamp(-2%, 3vw, 2%);
+    width: clamp(200px, 76vw, 320px);
+  }
+}
+
+/* =========================================
+   NDT · About Base Layout (Sections)
+   ========================================= */
+
+#ndt-about {
+  color: var(--text, #F5F5F4);
+}
+
+.ndt-about-section {
+  width: 100%;
+  padding: clamp(2rem, 5vw, 3.4rem) clamp(1.25rem, 4vw, 2.8rem);
+}
+
+.ndt-about-section > * {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ndt-about-section-header {
+  margin-bottom: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+.ndt-about-section-header h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  line-height: 1.2;
+}
+
+.ndt-about-section-header p {
+  margin: 0;
+  color: var(--text-muted, #BFC4BB);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Pillars */
+.ndt-about-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1rem, 3vw, 1.6rem);
+}
+
+.ndt-about-pillar {
+  background: var(--bg-light, #1A1B1E);
+  border: 1px solid var(--border, #2E3138);
+  border-radius: 14px;
+  padding: 1.1rem 1.1rem 1rem;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+.ndt-about-pillar h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
+}
+
+.ndt-about-pillar p {
+  margin: 0;
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.6;
+}
+
+/* Philosophy */
+.ndt-about-philosophy-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+  gap: clamp(1.2rem, 3vw, 2rem);
+}
+
+.ndt-about-philosophy-text p {
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.7;
+}
+
+.ndt-about-philosophy-visual {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ndt-about-philosophy-card {
+  background: var(--bg-light, #1A1B1E);
+  border: 1px solid var(--border, #2E3138);
+  border-radius: 14px;
+  padding: 1.2rem 1.1rem;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+.ndt-about-philosophy-tagline {
+  margin: 0 0 0.6rem;
+  font-weight: 600;
+  color: var(--text, #F5F5F4);
+}
+
+.ndt-about-philosophy-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.6;
+}
+
+/* Timeline */
+.ndt-about-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.4rem);
+}
+
+.ndt-about-timeline-item {
+  background: var(--bg-light, #1A1B1E);
+  border: 1px solid var(--border, #2E3138);
+  border-radius: 14px;
+  padding: 1.1rem 1.1rem 1rem;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+.ndt-about-timeline-item h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+}
+
+.ndt-about-timeline-item p {
+  margin: 0;
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.65;
+}
+
+/* Process */
+.ndt-about-process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1rem, 3vw, 1.5rem);
+}
+
+.ndt-about-step {
+  background: var(--bg-light, #1A1B1E);
+  border: 1px solid var(--border, #2E3138);
+  border-radius: 14px;
+  padding: 1.05rem 1.05rem 1rem;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+.ndt-about-step h3 {
+  margin: 0 0 0.35rem;
+}
+
+.ndt-about-step p {
+  margin: 0;
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.65;
+}
+
+/* Experience */
+.ndt-about-experience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(1rem, 3vw, 1.5rem);
+}
+
+.ndt-about-experience-column h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
+}
+
+.ndt-about-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.6;
+  display: grid;
+  gap: 0.35rem;
+}
+
+/* Human */
+.ndt-about-human-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.ndt-about-human-text p {
+  margin: 0 0 0.8rem;
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.65;
+}
+
+/* CTA */
+.ndt-about-cta-card {
+  background: var(--bg-light, #1A1B1E);
+  border: 1px solid var(--border, #2E3138);
+  border-radius: 16px;
+  padding: clamp(1.4rem, 4vw, 1.9rem);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+}
+
+.ndt-about-cta-card h2 {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+}
+
+.ndt-about-cta-card p {
+  margin: 0 0 0.75rem;
+  color: var(--text-muted, #BFC4BB);
+  line-height: 1.6;
+}
+
+.ndt-about-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  background: var(--primary, #BAA2E7);
+  color: var(--text-on-primary, #111317);
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.55);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.ndt-about-cta-button:hover,
+.ndt-about-cta-button:focus-visible {
+  background: var(--primary-hover, #A28DD8);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+}
+
+.ndt-about-cta-button:active {
+  transform: translateY(0);
+}
+
+.ndt-about-cta-note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted, #BFC4BB);
+}
+
+@media (max-width: 900px) {
+  .ndt-about-philosophy-inner {
+    grid-template-columns: 1fr;
+  }
+  .ndt-about-philosophy-visual {
+    justify-content: flex-start;
+  }
+}
+

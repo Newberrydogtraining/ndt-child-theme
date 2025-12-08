@@ -17,6 +17,10 @@ function ndt_child_enqueue_assets() {
     $ndt_services_page_id      = 10135;
     $ndt_service_area_page_id  = 10171;
 
+    // About page (resolved by slug to stay resilient to ID changes)
+    $ndt_about_page    = get_page_by_path( 'about' );
+    $ndt_about_page_id = $ndt_about_page ? (int) $ndt_about_page->ID : null;
+
     // Parent theme CSS
     wp_enqueue_style(
         $parent_style,
@@ -81,16 +85,6 @@ function ndt_child_enqueue_assets() {
         $ver
     );
 
-    // Hero combo card CSS (separate file, loads only where hero runs)
-    if ( is_front_page() || is_page( $ndt_home_page_id ) ) {
-        wp_enqueue_style(
-            'ndt-hero-combo-card-css',
-            $theme_uri . '/assets/css/ndt-hero-combo-card.css',
-            array( 'ndt-hero-css' ),
-            $ver
-        );
-    }
-
     // FAQ page CSS
     if ( is_page( $ndt_faq_page_id ) || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_faq_page_id ) ) {
         wp_enqueue_style(
@@ -101,6 +95,25 @@ function ndt_child_enqueue_assets() {
         );
     }
 
+    // Resolve About page match once for reuse
+    $preview_id    = isset( $_GET['preview_id'] ) ? (int) $_GET['preview_id'] : null;
+    $is_previewing = is_preview() && isset( $_GET['preview'] ) && isset( $_GET['preview_nonce'] );
+
+    $preview_is_about = $is_previewing && (
+        // Match resolved About ID when available
+        ( $ndt_about_page_id && $preview_id === $ndt_about_page_id )
+        // Fallback: allow any preview to load About assets if ID is unknown
+        || ! $ndt_about_page_id
+    );
+
+    $request_uri  = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+    $uri_is_about = is_string( $request_uri ) && false !== strpos( $request_uri, '/about' );
+
+    $is_about_page = is_page( $ndt_about_page_id )
+        || is_page( 'about' )
+        || $preview_is_about
+        || $uri_is_about;
+
     // Service Area page CSS
     if ( is_page( $ndt_service_area_page_id ) || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_service_area_page_id ) ) {
         wp_enqueue_style(
@@ -110,6 +123,20 @@ function ndt_child_enqueue_assets() {
             $ver
         );
     }
+
+    // About assets (global load; use filemtime for cache-busting while iterating)
+    $about_css_path = get_stylesheet_directory() . '/assets/css/ndt-about.css';
+    $about_js_path  = get_stylesheet_directory() . '/assets/js/ndt-about.js';
+    $about_ver_css  = file_exists( $about_css_path ) ? filemtime( $about_css_path ) : $ver;
+    $about_ver_js   = file_exists( $about_js_path ) ? filemtime( $about_js_path ) : $ver;
+
+    // About page CSS
+    wp_enqueue_style(
+        'ndt-about-css',
+        $theme_uri . '/assets/css/ndt-about.css',
+        array( 'ndt-global-css' ),
+        $about_ver_css
+    );
 
     /**
      * JS
@@ -228,5 +255,14 @@ function ndt_child_enqueue_assets() {
             true
         );
     }
+
+    // About page behavior (load globally; JS is self-guarded by selectors)
+    wp_enqueue_script(
+        'ndt-about-js',
+        $theme_uri . '/assets/js/ndt-about.js',
+        array( 'ndt-global-js' ),
+        $about_ver_js,
+        true
+    );
 }
 add_action( 'wp_enqueue_scripts', 'ndt_child_enqueue_assets' );

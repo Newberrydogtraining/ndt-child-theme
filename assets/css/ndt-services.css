@@ -596,7 +596,7 @@
   --sp-sky: #7895C4;
   --sp-ochre: #9D8058;
   --sp-sage: #85A894;
-  --sp-bg-deep: #050607;
+  --sp-bg-deep: var(--ndt-bg-dark, #0B0C0E);
   --sp-bg-card: #12141A;
   --sp-bg-elevated: #1A1D24;
   --sp-border: rgba(255, 255, 255, 0.06);
@@ -608,6 +608,43 @@
   color: var(--sp-text);
   overflow-x: hidden;
   position: relative;
+}
+
+/* Page-level background and container reset for Services */
+body.ndt-services-bg,
+body:has(.ndt-services-page) {
+  background: var(--ndt-bg-dark, #0B0C0E) !important;
+  color: var(--sp-text, #F5F5F4);
+  overflow-x: hidden;
+}
+
+body:has(.ndt-services-page) .site,
+body:has(.ndt-services-page) .site-content,
+body:has(.ndt-services-page) .entry-content,
+body:has(.ndt-services-page) #primary,
+body:has(.ndt-services-page) main,
+body:has(.ndt-services-page) .page-content {
+  background: var(--ndt-bg-dark, #0B0C0E) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body:has(.ndt-services-page) .elementor-element,
+body:has(.ndt-services-page) .elementor-section,
+body:has(.ndt-services-page) .elementor-widget,
+body:has(.ndt-services-page) .elementor-widget-container,
+body:has(.ndt-services-page) .elementor-section-wrap,
+body:has(.ndt-services-page) .e-con,
+body:has(.ndt-services-page) .e-con-inner,
+body:has(.ndt-services-page) section,
+body:has(.ndt-services-page) div {
+  background: transparent;
+}
+
+body:has(.ndt-services-page) .site-footer {
+  background: var(--ndt-bg-dark, #0B0C0E) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
 /* Ambient background with soft fade */
@@ -1394,7 +1431,7 @@
 
 /* Simple dark background - no fixed overlays */
 .ndt-services-page {
-  background: #050607 !important;
+  background: var(--ndt-bg-dark, #0B0C0E) !important;
 }
 
 /* Softer ambient - contained within hero only */
@@ -1497,7 +1534,7 @@
   position: relative;
   width: 100%;
   padding: 2rem 0 3rem;
-  background: #050607;
+  background: var(--ndt-bg-dark, #0B0C0E);
   overflow: hidden;
 }
 

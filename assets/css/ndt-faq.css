@@ -1,0 +1,983 @@
+/* =========================================
+   NDT FAQ – NUCLEAR ELEMENTOR OVERRIDE
+   Add this at the VERY TOP of your FAQ CSS
+   ========================================= */
+
+/* KILL ALL PARENT CONTAINER SPACING */
+.elementor-element:has(.ndt-faq-shell),
+.elementor-widget:has(.ndt-faq-shell),
+.elementor-widget-container:has(.ndt-faq-shell),
+.elementor-section:has(.ndt-faq-shell),
+.e-con:has(.ndt-faq-shell),
+.e-con-inner:has(.ndt-faq-shell),
+.elementor-section-wrap:has(.ndt-faq-shell),
+.elementor-inner:has(.ndt-faq-shell),
+.elementor-section-height-default:has(.ndt-faq-shell) {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Page-level: kill site-content padding when FAQ is present */
+body:has(.ndt-faq-shell) .site-content,
+body:has(.ndt-faq-shell) .entry-content,
+body:has(.ndt-faq-shell) main,
+body:has(.ndt-faq-shell) #primary,
+body:has(.ndt-faq-shell) .page-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Mobile: even more aggressive */
+@media (max-width: 767px) {
+  .elementor-element:has(.ndt-faq-shell),
+  .elementor-widget:has(.ndt-faq-shell),
+  .elementor-widget-container:has(.ndt-faq-shell),
+  .elementor-section:has(.ndt-faq-shell),
+  .e-con:has(.ndt-faq-shell),
+  .e-con-inner:has(.ndt-faq-shell),
+  body.elementor-page .ndt-faq-shell,
+  #ndt-page-root:has(.ndt-faq-shell),
+  #ndt-page-root > section:has(.ndt-faq-shell),
+  #ndt-page-root > div:has(.ndt-faq-shell),
+  section:has(.ndt-faq-shell),
+  div:has(.ndt-faq-shell) {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    padding-block-start: 0 !important;
+  }
+  
+  /* Kill the first-child gap too */
+  .ndt-faq-shell:first-child,
+  section:first-child:has(.ndt-faq-shell),
+  div:first-child:has(.ndt-faq-shell) {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+.ndt-faq-shell,
+.ndt-faq-shell *,
+.ndt-faq-shell * *,
+.ndt-faq-shell * * * {
+  color: inherit;
+  background-color: inherit;
+}
+
+/* Kill Elementor's accent colors completely */
+.elementor-widget-container .ndt-faq-shell,
+.ndt-faq-shell,
+.ndt-faq-shell * {
+  --e-global-color-primary: #baa2e7 !important;
+  --e-global-color-secondary: #baa2e7 !important;
+  --e-global-color-text: #f5f5f4 !important;
+  --e-global-color-accent: #baa2e7 !important;
+}
+
+/* Force all text colors */
+.ndt-faq-shell,
+.ndt-faq-shell p,
+.ndt-faq-shell span,
+.ndt-faq-shell li,
+.ndt-faq-shell button,
+.ndt-faq-shell a,
+.ndt-faq-shell h1,
+.ndt-faq-shell h2,
+.ndt-faq-shell h3,
+.ndt-faq-shell label,
+.ndt-faq-shell input {
+  color: var(--faq-text) !important;
+}
+
+.ndt-faq-shell .ndt-faq-kicker {
+  color: var(--faq-primary) !important;
+}
+
+.ndt-faq-shell .ndt-faq-subtitle,
+.ndt-faq-shell .ndt-faq-text-muted,
+.ndt-faq-shell .ndt-faq-card-body,
+.ndt-faq-shell .ndt-faq-card-body p,
+.ndt-faq-shell .ndt-faq-card-body li,
+.ndt-faq-shell .ndt-faq-search-hint,
+.ndt-faq-shell .ndt-faq-global-footer,
+.ndt-faq-shell .ndt-faq-global-footer p {
+  color: var(--faq-text-muted) !important;
+}
+
+/* Kill that pink card background */
+.ndt-faq-shell .ndt-faq-card,
+.ndt-faq-shell .ndt-faq-card.is-open,
+.ndt-faq-shell .ndt-faq-card:hover,
+.ndt-faq-shell .ndt-faq-card:focus,
+.ndt-faq-shell .ndt-faq-card:active,
+.ndt-faq-shell article.ndt-faq-card {
+  background: var(--faq-bg-glass) !important;
+  background-color: var(--faq-bg-glass) !important;
+}
+
+.ndt-faq-shell .ndt-faq-card-header,
+.ndt-faq-shell .ndt-faq-card-body,
+.ndt-faq-shell .ndt-faq-card-footer {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Category pills - kill the red */
+.ndt-faq-shell .ndt-faq-category-pill {
+  color: var(--faq-text) !important;
+  background: var(--faq-pill-bg) !important;
+  border-color: var(--faq-border) !important;
+  border-radius: 999px !important;
+}
+
+.ndt-faq-shell .ndt-faq-category-pill:hover,
+.ndt-faq-shell .ndt-faq-category-pill:focus {
+  color: var(--faq-text) !important;
+  background: var(--faq-pill-bg) !important;
+  border-color: rgba(245, 245, 244, 0.25) !important;
+}
+
+.ndt-faq-shell .ndt-faq-category-pill.is-active {
+  color: var(--faq-pill-active-text) !important;
+  background: var(--faq-pill-active-bg) !important;
+  border-color: transparent !important;
+}
+
+/* Toggle button */
+.ndt-faq-shell .ndt-faq-card-toggle,
+.ndt-faq-shell .ndt-faq-card-question {
+  color: var(--faq-text) !important;
+  background: transparent !important;
+}
+
+/* Prev/Next buttons */
+.ndt-faq-shell .ndt-faq-prev,
+.ndt-faq-shell .ndt-faq-next {
+  color: var(--faq-text-muted) !important;
+  background: var(--faq-pill-bg) !important;
+  border-radius: 999px !important;
+}
+
+.ndt-faq-shell .ndt-faq-prev:hover,
+.ndt-faq-shell .ndt-faq-next:hover {
+  color: var(--faq-text) !important;
+  background: var(--faq-pill-bg) !important;
+  border-radius: 999px !important;
+}
+
+/* Links inside content */
+.ndt-faq-shell a,
+.ndt-faq-shell a:link,
+.ndt-faq-shell a:visited {
+  color: var(--faq-text-muted) !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.ndt-faq-shell a:hover,
+.ndt-faq-shell a:active {
+  color: var(--faq-text) !important;
+  text-shadow: 0 1px 8px rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================
+   NDT FAQ – Root shell
+   ========================================= */
+.ndt-faq-shell {
+  --faq-bg: var(--ndt-bg, #0b0c0e);
+  --faq-bg-soft: var(--ndt-bg-light, #1a1b1e);
+  --faq-bg-glass: rgba(26, 27, 30, 0.78);
+  --faq-border: #2e3138;
+  --faq-border-muted: #26282c;
+  --faq-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+  --faq-text: #f5f5f4;
+  --faq-text-muted: #bfc4bb;
+  --faq-primary: #baa2e7;
+  --faq-primary-hover: #a28dd8;
+  --faq-pill-bg: #0b0c0e;
+  --faq-pill-active-bg: #baa2e7;
+  --faq-pill-active-text: #111317;
+  --faq-icon: #cdd3ff;
+  --faq-card-radius: 18px;
+  --faq-max-width: 1100px;
+  --faq-content-max: 800px;
+  
+  width: 100%;
+  max-width: 100%;
+  color: var(--faq-text);
+  background: transparent;
+  font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.ndt-faq-shell *,
+.ndt-faq-shell *::before,
+.ndt-faq-shell *::after {
+  box-sizing: border-box;
+  font-family: inherit !important;
+}
+
+/* =========================================
+   NDT FAQ – Initial hidden state for entrance animation
+   Elements start hidden, JS reveals them
+   ========================================= */
+.ndt-faq-hero-inner > * {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Hero elements that have been animated in stay visible */
+.ndt-faq-hero-inner > .is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ndt-faq-category-pill {
+  opacity: 0;
+  transform: translateY(12px) scale(0.92);
+}
+
+/* Pills that have been animated in stay visible */
+.ndt-faq-category-pill.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ndt-faq-card {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+/* Cards that have been animated in stay visible */
+.ndt-faq-card.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* When JS has initialized, allow animations to run */
+.ndt-faq-shell.is-ready .ndt-faq-hero-inner > *,
+.ndt-faq-shell.is-ready .ndt-faq-card {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.ndt-faq-shell.is-ready .ndt-faq-category-pill {
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Fallback: if JS fails to load, show content after delay */
+@media (prefers-reduced-motion: no-preference) {
+  .ndt-faq-shell:not(.is-ready) .ndt-faq-hero-inner > *,
+  .ndt-faq-shell:not(.is-ready) .ndt-faq-category-pill,
+  .ndt-faq-shell:not(.is-ready) .ndt-faq-card {
+    animation: ndt-faq-fallback-reveal 0.01s ease 2s forwards;
+  }
+}
+
+@keyframes ndt-faq-fallback-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================
+   NDT FAQ – Hero
+   ========================================= */
+.ndt-faq-hero {
+  padding: 5.5rem clamp(2rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
+  margin-top: 0 !important;
+  background: transparent !important;
+}
+
+.ndt-faq-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "kicker"
+    "title"
+    "subtitle"
+    "search";
+  gap: 1rem;
+  max-width: var(--faq-max-width);
+  margin: 0 auto;
+}
+
+.ndt-faq-kicker {
+  grid-area: kicker;
+  margin: 0;
+  font-family: Ubuntu, system-ui, -apple-system, sans-serif !important;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--faq-primary) !important;
+}
+
+.ndt-faq-title {
+  grid-area: title;
+  margin: 0;
+  font-family: Ubuntu, system-ui, -apple-system, sans-serif !important;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--faq-text) !important;
+}
+
+.ndt-faq-subtitle {
+  grid-area: subtitle;
+  margin: 0.5rem 0 0;
+  max-width: 42rem;
+  font-family: Ubuntu, system-ui, -apple-system, sans-serif !important;
+  font-weight: 450;
+  color: var(--faq-text-muted) !important;
+  line-height: 1.65;
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   NDT FAQ – Search
+   ========================================= */
+.ndt-faq-search {
+  grid-area: search;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 420px;
+}
+
+.ndt-faq-search-label {
+  font-size: 0.8rem;
+  color: var(--faq-text-muted) !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.ndt-faq-search-shell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent !important;
+  border: none;
+  border-radius: 0;
+  padding: 0.25rem 0;
+  min-height: 44px;
+  transition: none;
+  border-bottom: 1px solid rgba(245, 245, 244, 0.12);
+}
+
+.ndt-faq-search-shell:focus-within {
+  border-bottom-color: rgba(245, 245, 244, 0.3);
+}
+
+.ndt-faq-search-input {
+  flex: 1;
+  background: transparent !important;
+  border: none;
+  color: var(--faq-text) !important;
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  outline: none;
+  /* Keep native search styling so the clear button is available */
+  /* do NOT set appearance: none here */
+}
+
+.ndt-faq-search-input::placeholder {
+  color: rgba(191, 196, 187, 0.65) !important;
+}
+
+/* Make sure input type=search shows native clear button */
+.ndt-faq-search-input[type="search"] {
+  -webkit-appearance: searchfield;
+  appearance: auto;
+}
+
+/* Hide the custom clear button - use native browser X instead */
+.ndt-faq-search-clear {
+  display: none !important;
+}
+
+
+/* Style the native browser clear button (the X in the input) */
+.ndt-faq-search-input::-webkit-search-cancel-button,
+.ndt-faq-search-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23baa2e7' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'%3E%3C/line%3E%3Cline x1='6' y1='6' x2='18' y2='18'%3E%3C/line%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.ndt-faq-search-input::-webkit-search-cancel-button:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* Firefox clear button */
+.ndt-faq-search-input::-moz-clear {
+  cursor: pointer;
+}
+
+.ndt-faq-search-hint {
+  margin: 0;
+  color: var(--faq-text-muted) !important;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+/* =========================================
+   NDT FAQ – Body layout
+   ========================================= */
+.ndt-faq-body {
+  margin-top: 0;
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(2rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  max-width: var(--faq-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* =========================================
+   NDT FAQ – Category pills
+   ========================================= */
+.ndt-faq-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.5rem 0 1.5rem;
+}
+
+.ndt-faq-category-pill {
+  border: 1px solid var(--faq-border) !important;
+  background: var(--faq-pill-bg) !important;
+  color: var(--faq-text) !important;
+  border-radius: 999px !important;
+  padding: 0.7rem 1.35rem;
+  font-family: Ubuntu, system-ui, -apple-system, sans-serif !important;
+  font-size: 0.9rem;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: 
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.25s ease,
+    opacity 0.4s ease;
+  white-space: nowrap;
+}
+
+.ndt-faq-category-pill:hover,
+.ndt-faq-category-pill:focus-visible {
+  border-color: rgba(245, 245, 244, 0.25) !important;
+  color: var(--faq-text) !important;
+  background: var(--faq-pill-bg) !important;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  outline: none;
+}
+
+.ndt-faq-category-pill:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.ndt-faq-category-pill.is-active {
+  background: var(--faq-pill-active-bg) !important;
+  color: var(--faq-pill-active-text) !important;
+  border-color: transparent !important;
+}
+
+/* =========================================
+   NDT FAQ – Panels
+   ========================================= */
+.ndt-faq-panels {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  /* breathe a bit below the category pills */
+  margin-top: 2rem !important;
+  padding-top: 1rem !important;
+}
+
+.ndt-faq-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* =========================================
+   NDT FAQ – Cards
+   ========================================= */
+.ndt-faq-card {
+  background: var(--faq-bg-glass) !important;
+  border: 1px solid var(--faq-border) !important;
+  border-radius: var(--faq-card-radius);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.ndt-faq-card:hover {
+  border-color: rgba(245, 245, 244, 0.18) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.ndt-faq-card.is-open {
+  border-color: rgba(245, 245, 244, 0.25) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.ndt-faq-card.is-dragging {
+  transition: none;
+}
+
+/* Click priority fix */
+.ndt-faq-card-header,
+.ndt-faq-card-footer {
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+}
+
+.ndt-faq-card-header {
+  padding: 1.35rem 1.75rem;
+}
+
+.ndt-faq-card-toggle,
+.ndt-faq-prev,
+.ndt-faq-next {
+  pointer-events: auto;
+  position: relative;
+  z-index: 3;
+}
+
+.ndt-faq-card-toggle {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  justify-content: space-between;
+  border: none !important;
+  background: transparent !important;
+  color: var(--faq-text) !important;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: left;
+  padding: 0 0 0.15rem;
+  min-width: 0;
+  white-space: normal;
+}
+
+.ndt-faq-card-toggle:focus-visible {
+  outline: none;
+}
+
+.ndt-faq-card-toggle:focus-visible .ndt-faq-card-icon {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
+.ndt-faq-card-question {
+  flex: 1;
+  min-width: 0;
+  font-family: Ubuntu, system-ui, -apple-system, sans-serif !important;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--faq-text) !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.ndt-faq-card-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--faq-icon) !important;
+  position: relative;
+  font-size: 0;
+  line-height: 1;
+  transform: translateY(0.5px);
+  transition:
+    transform 0.26s ease,
+    color 0.2s ease;
+}
+
+.ndt-faq-card-icon::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transform-origin: center;
+  transition: transform 0.26s ease;
+}
+
+.ndt-faq-card.is-open .ndt-faq-card-icon {
+  transform: translateY(0.5px);
+  color: var(--faq-text) !important;
+}
+
+.ndt-faq-card.is-open .ndt-faq-card-icon::before {
+  transform: rotate(-135deg);
+}
+
+/* =========================================
+   NDT FAQ – Card body
+   ========================================= */
+.ndt-faq-card-body {
+  margin: 0;
+  padding: 0 1.75rem;
+  margin-top: 0.4rem;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease;
+  font-family: Ubuntu, system-ui, -apple-system, sans-serif !important;
+  font-weight: 450;
+  line-height: 1.75;
+  color: var(--faq-text-muted) !important;
+  font-size: 1rem;
+  background: transparent !important;
+}
+
+.ndt-faq-card-body.is-open {
+  padding-top: 1.1rem;
+  padding-bottom: 1.25rem;
+  opacity: 1;
+}
+
+.ndt-faq-card-body p {
+  margin: 0 0 1.15rem;
+  max-width: var(--faq-content-max);
+  color: var(--faq-text-muted) !important;
+}
+
+.ndt-faq-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.ndt-faq-card-body ul,
+.ndt-faq-card-body ol {
+  margin: 0 0 1.15rem 1.25rem;
+  padding: 0;
+  max-width: var(--faq-content-max);
+}
+
+.ndt-faq-card-body li {
+  margin-bottom: 0.5rem;
+  color: var(--faq-text-muted) !important;
+}
+
+.ndt-faq-card-body li:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================
+   NDT FAQ – Card footer nav
+   ========================================= */
+.ndt-faq-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.75rem 1.35rem;
+  border-top: 1px solid var(--faq-border-muted) !important;
+  background: transparent !important;
+}
+
+.ndt-faq-prev,
+.ndt-faq-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--faq-border) !important;
+  background: var(--faq-pill-bg) !important;
+  color: var(--faq-text-muted) !important;
+  border-radius: 999px !important;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: 
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.ndt-faq-prev:hover,
+.ndt-faq-prev:focus-visible,
+.ndt-faq-next:hover,
+.ndt-faq-next:focus-visible {
+  border-color: rgba(245, 245, 244, 0.25) !important;
+  color: var(--faq-text) !important;
+  background: var(--faq-pill-bg) !important;
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  outline: none;
+}
+
+.ndt-faq-prev:active,
+.ndt-faq-next:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================
+   NDT FAQ – States
+   ========================================= */
+.ndt-faq-card.is-filtered-out {
+  display: none !important;
+}
+
+.ndt-faq-empty {
+  width: 100%;
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border: 1px dashed var(--faq-border) !important;
+  border-radius: 14px;
+  background: rgba(26, 27, 30, 0.4) !important;
+  color: var(--faq-text-muted) !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* =========================================
+   NDT FAQ – Global footer
+   ========================================= */
+.ndt-faq-global-footer {
+  margin-top: 2rem;
+  padding: 1.75rem 0 0;
+  border-top: 1px solid var(--faq-border-muted);
+  color: var(--faq-text-muted) !important;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+.ndt-faq-global-footer p {
+  margin: 0;
+  max-width: var(--faq-content-max);
+  color: var(--faq-text-muted) !important;
+}
+
+/* =========================================
+   NDT FAQ – Desktop (1024+)
+   ========================================= */
+@media (min-width: 1024px) {
+  .ndt-faq-shell {
+    --faq-max-width: 1140px;
+  }
+
+  .ndt-faq-hero-inner {
+    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-areas:
+      "kicker search"
+      "title search"
+      "subtitle search";
+    gap: 1rem 4rem;
+    align-items: start;
+  }
+
+  .ndt-faq-search {
+    margin-top: 0;
+    max-width: none;
+    align-self: center;
+  }
+
+  .ndt-faq-categories {
+    position: sticky;
+    top: 1rem;
+    z-index: 10;
+    background: linear-gradient(180deg, rgba(11, 12, 14, 0.98) 70%, transparent) !important;
+    padding: 1rem 0 2rem;
+    margin: -0.5rem 0 0.5rem;
+  }
+
+  .ndt-faq-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .ndt-faq-card.is-dragging {
+    transform: none;
+  }
+}
+
+/* =========================================
+   NDT FAQ – Large desktop (1400+)
+   ========================================= */
+@media (min-width: 1400px) {
+  .ndt-faq-shell {
+    --faq-max-width: 1240px;
+  }
+
+  .ndt-faq-hero {
+    padding-top: 5.5rem;
+    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    margin-top: 0 !important;
+  }
+
+  .ndt-faq-title {
+    font-size: 3.75rem;
+  }
+
+  .ndt-faq-card-header {
+    padding: 1.5rem 2rem;
+  }
+
+  .ndt-faq-card-body {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .ndt-faq-card-footer {
+    padding: 1.15rem 2rem 1.5rem;
+  }
+}
+
+/* =========================================
+   NDT FAQ – Mobile (< 768px)
+   ========================================= */
+@media (max-width: 767px) {
+  .ndt-faq-shell {
+    overflow-x: hidden;
+    max-width: 100vw;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .ndt-faq-hero {
+    padding: 0 1.25rem 1rem !important;
+    margin-top: 0 !important;
+    overflow: hidden;
+  }
+
+  /* Kill any Elementor/parent spacing on mobile */
+  .ndt-faq-shell .ndt-faq-hero,
+  .elementor-widget-container .ndt-faq-shell,
+  .elementor-widget-container .ndt-faq-hero,
+  .ndt-faq-hero-inner,
+  .ndt-faq-kicker {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+  
+  /* First child in hero should have no top margin */
+  .ndt-faq-hero-inner > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .ndt-faq-body {
+    padding: 1.25rem 1.25rem 2.5rem;
+    overflow: hidden;
+  }
+
+  .ndt-faq-categories {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.75rem;
+    margin: 0 -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .ndt-faq-category-pill {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    padding: 0.55rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .ndt-faq-categories::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .ndt-faq-categories::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+  }
+
+  .ndt-faq-panel {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .ndt-faq-card {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .ndt-faq-card-header {
+    padding: 1rem 1.15rem;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .ndt-faq-card-toggle {
+    font-size: 1rem;
+    max-width: 100%;
+    overflow: visible;
+    white-space: normal !important;
+    text-align: left !important;
+  }
+
+  .ndt-faq-card-question {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal !important;
+    text-align: left !important;
+  }
+
+  .ndt-faq-card-body {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+    font-size: 0.95rem;
+    max-width: 100%;
+  }
+
+  .ndt-faq-card-body p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .ndt-faq-card-footer {
+    padding: 0.85rem 1.15rem 1rem;
+  }
+
+  .ndt-faq-global-footer {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .ndt-faq-global-footer p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+}
