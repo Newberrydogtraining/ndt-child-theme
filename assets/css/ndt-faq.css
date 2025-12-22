@@ -67,10 +67,10 @@ body:has(.ndt-faq-shell) .page-content {
 .elementor-widget-container .ndt-faq-shell,
 .ndt-faq-shell,
 .ndt-faq-shell * {
-  --e-global-color-primary: #baa2e7 !important;
-  --e-global-color-secondary: #baa2e7 !important;
-  --e-global-color-text: #f5f5f4 !important;
-  --e-global-color-accent: #baa2e7 !important;
+  --e-global-color-primary: var(--accent) !important;
+  --e-global-color-secondary: var(--accent) !important;
+  --e-global-color-text: var(--text) !important;
+  --e-global-color-accent: var(--accent) !important;
 }
 
 /* Force all text colors */
@@ -190,13 +190,13 @@ body:has(.ndt-faq-shell) .page-content {
   --faq-border: #2e3138;
   --faq-border-muted: #26282c;
   --faq-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
-  --faq-text: #f5f5f4;
-  --faq-text-muted: #bfc4bb;
-  --faq-primary: #baa2e7;
-  --faq-primary-hover: #a28dd8;
+  --faq-text: var(--text);
+  --faq-text-muted: var(--text-muted);
+  --faq-primary: var(--accent);
+  --faq-primary-hover: var(--accent-hover);
   --faq-pill-bg: #0b0c0e;
-  --faq-pill-active-bg: #baa2e7;
-  --faq-pill-active-text: #111317;
+  --faq-pill-active-bg: var(--accent);
+  --faq-pill-active-text: var(--surface);
   --faq-icon: #cdd3ff;
   --faq-card-radius: 18px;
   --faq-max-width: 1100px;

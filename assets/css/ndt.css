@@ -1,106 +1,51 @@
 /* =========================================
-   Newberry Dog Training Co.
+   Newberry Dog Training Co. - START
    Global design tokens and theme mapping
    ========================================= */
 
-/* Canonical tokens: do not hardcode hex outside this block
-   unless you are deliberately extending the token set. */
+/* ═══════════════════════════════════════════════════════════════
+   ULTRA MINIMAL COLOR SYSTEM - MacBook Pro Inspired
+   10 tokens total (75% reduction from 40+)
+   Dark mode only - Light mode calculated later when needed
+   ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Dark theme core surfaces */
-  --ndt-bg-dark: #0B0C0E;
-  --ndt-bg: #101113;
-  --ndt-bg-light: #1A1B1E;
+  /* ═══════════════════════════════════════════════════
+     NEUTRALS (5 tokens) - The Foundation (95% of interface)
+     ═══════════════════════════════════════════════════ */
 
-  /* Dark theme text */
-  --ndt-text: #F5F5F4;
-  --ndt-text-muted: #BFC4BB;
+  --surface: #000000;              /* Pure black - main background (Apple style) */
+  --surface-raised: #1a1a1a;       /* Elevated cards, panels */
+  --text: #F5F5F4;                 /* Primary white text */
+  --text-muted: #A8ABA6;           /* Secondary gray text */
+  --border: #2E3138;               /* Subtle borders, dividers */
 
-  /* Dark theme borders and highlights */
-  --ndt-highlight: #40454F;
-  --ndt-border: #2E3138;
-  --ndt-border-muted: #26282C;
+  /* RGB channel values for rgba() usage */
+  --surface-rgb: 0, 0, 0;
+  --surface-raised-rgb: 26, 26, 26;
+  --text-rgb: 245, 245, 244;
+  --text-muted-rgb: 168, 171, 166;
 
-  /* Dark theme brand + states */
-  --ndt-primary: #BAA2E7;
-  --ndt-primary-hover: #A28DD8;
-  --ndt-primary-focus: #8DA0BF;
-  --ndt-text-on-primary: #111317;
 
-  --ndt-secondary: #939EAE;
-  --ndt-accent: #8DA0BF;
+  /* ═══════════════════════════════════════════════════
+     ACCENT PURPLE (3 tokens) - Brand & Interactive (4%)
+     ═══════════════════════════════════════════════════ */
 
-  --ndt-danger: #A14553;
-  --ndt-warning: #A6A17D;
-  --ndt-success: #85A894;
-  --ndt-info: #8DA0BF;
+  --accent: #8B6FC9;               /* Refined deep purple */
+  --accent-hover: #9D7FDB;         /* Lighter hover state */
+  --accent-active: #7A5EB8;        /* Pressed/active state */
 
-  /* Logo-only colors */
-  --ndt-logo-accent: #5F355F;
-  --ndt-logo-accent-ink: #4B2163;
+  /* Usage: Brand elements, tabs, navigation, links, focus states */
 
-  /* Utility colors */
-  --ndt-utility-ink: #090608;
-  --ndt-utility-taupe: #4F4745;
-  --ndt-utility-brick: #9C3545;
-  --ndt-utility-sand: #D1BCA9;
-  --ndt-utility-sky: #7895C4;
-  --ndt-utility-ochre: #9D8058;
-  --ndt-utility-plum-deep: #4B2163;
 
-  /* Transparency helpers */
-  --ndt-transparent: #FFFFFF00;
-  --ndt-bg-dark-trans: #0B0C0EF5;
-  --ndt-bg-trans: #101113F7;
-  --ndt-bg-light-trans: #22252BB0;
+  /* ═══════════════════════════════════════════════════
+     CTA GREEN (2 tokens) - Primary Actions ONLY (1%)
+     ═══════════════════════════════════════════════════ */
 
-  /* Light theme core surfaces */
-  --ndt-light-bg-dark: #E8EAED;
-  --ndt-light-bg: #F3F4F6;
-  --ndt-light-bg-light: #F9FAFB;
+  --cta: #00692A;                  /* Signature green */
+  --cta-hover: #2F694C;            /* Warmer hover */
 
-  /* Light theme text */
-  --ndt-light-text: #111317;
-  --ndt-light-text-muted: #575E6B;
-
-  /* Light theme borders and highlights */
-  --ndt-light-highlight: #E0E4EB;
-  --ndt-light-border: #C0C5CE;
-  --ndt-light-border-muted: #DCDFE5;
-
-  /* Light theme brand + states */
-  --ndt-light-primary: #582BAB;
-  --ndt-light-primary-hover: #46298E;
-  --ndt-light-primary-focus: #5070A5;
-  --ndt-light-text-on-primary: #FFFFFF;
-
-  --ndt-light-secondary: #586474;
-  --ndt-light-accent: #3D5C8F;
-
-  --ndt-light-danger: #993342;
-  --ndt-light-warning: #746E44;
-  --ndt-light-success: #467259;
-  --ndt-light-info: #3D5C8F;
-
-  /* Hero / glass / CTA specific extensions */
-  --ndt-hero-glass-bg: radial-gradient(
-    130% 100% at 50% 0%,
-    rgba(35, 33, 42, 0.85) 0%,
-    rgba(11, 12, 14, 0.95) 100%
-  );
-
-  --ndt-cta-primary-sweep: linear-gradient(
-    90deg,
-    rgba(186, 162, 231, 0.15) 0%,
-    rgba(186, 162, 231, 0.3) 100%
-  );
-  --ndt-cta-secondary-sweep: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.15) 100%
-  );
-  --ndt-cta-primary-border: rgba(186, 162, 231, 0.2);
-  --ndt-cta-secondary-border: rgba(255, 255, 255, 0.1);
+  /* Usage: ONLY primary CTAs ("Get Started", "Book Now") - max 1-2 per page */
 }
 
 /* =========================================
@@ -111,8 +56,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--ndt-bg-dark);
-  color: var(--ndt-text);
+  background-color: var(--surface);
+  color: var(--text);
 }
 
 /* Let Elementor shells be transparent so the body shows through */
@@ -132,67 +77,59 @@ body.elementor-page,
 }
 
 /* =========================================
-   Abstract theme mapping
-   Use these in components: var(--bg), var(--text) etc.
+   Backward Compatibility Mappings
+   Legacy variable names → New minimal tokens
    ========================================= */
 
-/* Default / dark theme */
+:root {
+  /* Old surface/bg variables → New minimal neutrals */
+  --ndt-bg-dark: var(--surface);
+  --ndt-bg: var(--surface-raised);
+  --ndt-bg-light: var(--surface-raised);
+  --bg-dark: var(--surface);
+  --bg: var(--surface-raised);
+  --bg-light: var(--surface-raised);
 
-body,
-body[data-theme="dark"] {
-  --bg-dark: var(--ndt-bg-dark);
-  --bg: var(--ndt-bg);
-  --bg-light: var(--ndt-bg-light);
+  /* Old text variables → New minimal text */
+  --ndt-text: var(--text);
+  --ndt-text-muted: var(--text-muted);
 
-  --text: var(--ndt-text);
-  --text-muted: var(--ndt-text-muted);
+  /* Old border variables → New minimal border */
+  --ndt-border: var(--border);
+  --ndt-border-muted: var(--border);
+  --border-muted: var(--border);
+  --ndt-highlight: var(--surface-raised);
+  --highlight: var(--surface-raised);
 
-  --highlight: var(--ndt-highlight);
+  /* Old brand variables → New accent purple */
+  --ndt-primary: var(--accent);
+  --ndt-primary-hover: var(--accent-hover);
+  --ndt-primary-focus: var(--accent-active);
+  --primary: var(--accent);
+  --primary-hover: var(--accent-hover);
+  --primary-focus: var(--accent-active);
+  --text-on-primary: var(--text);
+  --ndt-text-on-primary: var(--text);
 
-  --border: var(--ndt-border);
-  --border-muted: var(--ndt-border-muted);
+  /* Old CTA/success → New CTA green */
+  --ndt-success: var(--cta);
+  --success: var(--cta);
 
-  --primary: var(--ndt-primary);
-  --primary-hover: var(--ndt-primary-hover);
-  --primary-focus: var(--ndt-primary-focus);
-  --text-on-primary: var(--ndt-text-on-primary);
+  /* Deprecated: these should be replaced with --accent or --cta */
+  --ndt-secondary: var(--text-muted);
+  --secondary: var(--text-muted);
+  --ndt-accent: var(--accent);
 
-  --secondary: var(--ndt-secondary);
-  --accent: var(--ndt-accent);
+  /* Old utility colors → New minimal tokens */
+  --ndt-utility-ink: var(--surface);
+  --ndt-utility-sky: var(--accent);
+  --ndt-utility-ochre: var(--accent);
+  --ndt-utility-plum-deep: var(--accent);
 
-  --danger: var(--ndt-danger);
-  --warning: var(--ndt-warning);
-  --success: var(--ndt-success);
-  --info: var(--ndt-info);
-}
-
-/* Light theme mapping */
-
-body[data-theme="light"] {
-  --bg-dark: var(--ndt-light-bg-dark);
-  --bg: var(--ndt-light-bg);
-  --bg-light: var(--ndt-light-bg-light);
-
-  --text: var(--ndt-light-text);
-  --text-muted: var(--ndt-light-text-muted);
-
-  --highlight: var(--ndt-light-highlight);
-
-  --border: var(--ndt-light-border);
-  --border-muted: var(--ndt-light-border-muted);
-
-  --primary: var(--ndt-light-primary);
-  --primary-hover: var(--ndt-light-primary-hover);
-  --primary-focus: var(--ndt-light-primary-focus);
-  --text-on-primary: var(--ndt-light-text-on-primary);
-
-  --secondary: var(--ndt-light-secondary);
-  --accent: var(--ndt-light-accent);
-
-  --danger: var(--ndt-light-danger);
-  --warning: var(--ndt-light-warning);
-  --success: var(--ndt-light-success);
-  --info: var(--ndt-light-info);
+  /* State colors - only add if needed for forms/validation */
+  --danger: #E85D6F;
+  --warning: #D9A854;
+  --info: var(--accent);
 }
 
 /* =========================================
@@ -308,6 +245,46 @@ a:focus-visible {
 }
 
 /* =========================================
+   NUCLEAR ELEMENTOR COLOR OVERRIDE
+   Prevent Elementor's red/default colors from EVER appearing
+   ========================================= */
+
+/* Kill all Elementor default colors globally */
+.elementor-button,
+.elementor-button:visited,
+.elementor-button:hover,
+.elementor-button:focus,
+.elementor-button:active,
+button.elementor-button,
+a.elementor-button {
+  background-color: transparent !important;
+  color: inherit !important;
+  border-color: transparent !important;
+}
+
+/* Prevent Elementor from injecting ANY background colors */
+[class*="elementor"]:not([class*="ndt-"]) {
+  background-color: inherit !important;
+}
+
+/* Kill Elementor's accent/primary color variables */
+:root {
+  --e-global-color-primary: transparent !important;
+  --e-global-color-secondary: transparent !important;
+  --e-global-color-text: var(--text) !important;
+  --e-global-color-accent: transparent !important;
+}
+
+/* Override any inline Elementor styles attempting to use red */
+[style*="background-color: red"],
+[style*="background-color: #e"],
+[style*="background: red"],
+[style*="background: #e"] {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* =========================================
    Global button reset
    ========================================= */
 
@@ -338,7 +315,7 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--primary, #BAA2E7);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -446,9 +423,9 @@ button:focus-visible {
 
 .ndt-cta-secondary {
   padding: 0.55rem 1.1rem;
-  background-color: #111317;
+  background-color: var(--surface);
   color: var(--text-muted);
-  border: 1px solid var(--highlight);
+  border: 1px solid var(--border);
   box-shadow: none;
   font-size: 0.85rem;
 }
@@ -457,13 +434,13 @@ button:focus-visible {
 .ndt-cta-secondary:focus-visible {
   background-color: var(--accent);
   border-color: var(--accent);
-  color: #111317;
+  color: var(--surface);
 }
 
 .ndt-cta-secondary:active {
-  background-color: var(--primary-focus);
-  border-color: var(--primary-focus);
-  color: #111317;
+  background-color: var(--accent-active);
+  border-color: var(--accent-active);
+  color: var(--surface);
 }
 
 /* Kill underlines on all NDT pill CTAs explicitly */
@@ -486,1076 +463,8 @@ button:focus-visible {
 }
 
 /* =========================================
-   NDT Hero Dog Parallax + Park Pin
-   Complete CSS
+   Newberry Dog Training Co. - END
+   Global design tokens and theme mapping
    ========================================= */
-
-/* Hero stage - dogs visually start here */
-.ndt-hero-dog-stage {
-  position: relative;
-  z-index: 1;
-  overflow: visible !important;
-}
-
-/* Park background - dogs reparent here for pin */
-.ndt-dog-bg {
-  position: relative;
-  min-height: 100vh;
-  overflow: visible !important;
-  z-index: 0;
-}
-
-/* Dogs once reparented to park */
-.ndt-dog-bg .ndt-chubby,
-.ndt-dog-bg .ndt-bluebell,
-.ndt-dog-bg .ndt-ground-shadow {
-  z-index: 10;
-  pointer-events: none;
-}
-
-/* Elementor often nests wrappers that clip - force visible */
-.ndt-hero-dog-stage > .elementor-widget-wrap,
-.ndt-hero-dog-stage > .elementor-container,
-.ndt-hero-dog-stage .elementor-widget-image,
-.ndt-dog-bg > .elementor-widget-wrap,
-.ndt-dog-bg > .elementor-container {
-  overflow: visible !important;
-}
-
-/* =========================================
-   Glass Hero widget (isolated classes)
-   ========================================= */
-
-/* Outer shell inside Elementor section */
-.ndt-gh-shell {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: clamp(2rem, 6vh, 3rem) clamp(1.5rem, 4vw, 3rem);
-
-  /* Needed for visible 3D tilt */
-  perspective: 1200px;
-
-  /* Must receive mouse events for tilt JS */
-  pointer-events: auto; /* card inside still handles clicks */
-}
-
-/* Glass card */
-.ndt-gh-card {
-  pointer-events: auto;
-  position: relative;
-  width: 100%;
-  max-width: 1104px;
-
-  background: var(
-    --ndt-hero-glass-bg,
-    radial-gradient(
-      130% 100% at 50% 0%,
-      rgba(35, 33, 42, 0.85) 0%,
-      rgba(11, 12, 14, 0.95) 100%
-    )
-  );
-  backdrop-filter: blur(24px) saturate(110%);
-  -webkit-backdrop-filter: blur(24px) saturate(110%);
-
-  border: 1px solid var(--border);
-  border-radius: 32px;
-  padding: 4rem 5rem;
-
-  box-shadow:
-    0 40px 80px -20px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(186, 162, 231, 0.08) inset;
-
-  text-align: center;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-/* Pre-title pill */
-.ndt-gh-pretitle {
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-
-  color: var(--text-muted);
-  background: rgba(64, 69, 79, 0.3);
-  border: 1px solid var(--border-muted);
-
-  margin-bottom: 1.5rem;
-  padding: 0.5em 1.2em;
-  border-radius: 100px;
-}
-
-/* Heading */
-.ndt-gh-title {
-  margin: 0 0 1.1rem;
-  font-weight: 700;
-  font-size: clamp(2.9rem, 5vw, 4.6rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  color: var(--text-muted); /* softer top line */
-}
-
-/* "Change." line – main punch */
-.ndt-gh-serif {
-  display: inline-block;
-  margin-top: 0.1rem;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.25em;
-  letter-spacing: -0.035em;
-  color: var(--text);        /* full contrast */
-  text-shadow: 0 0.04em 0.22em rgba(0, 0, 0, 0.7);
-  transition: transform 0.25s ease, text-shadow 0.25s ease;
-}
-/* Micro motion: Change. reacts when the card is hovered */
-.ndt-gh-card:hover .ndt-gh-serif {
-  transform: translateY(-2px) scale(1.03);
-  text-shadow: 0 0.08em 0.28em rgba(0, 0, 0, 0.9);
-}
-
-/* Icon row */
-.ndt-gh-icons {
-  display: flex;
-  justify-content: center;
-  gap: 3.5rem;
-  margin: 2rem 0 3rem;   /* slightly closer to the heading */
-  color: var(--text-muted);
-}
-
-/* Each icon block */
-.ndt-gh-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: default;
-  transition: color 0.3s ease;
-  width: 150px;           /* keeps labels from reflowing weirdly */
-}
-
-/* Big icon wrapper – controls actual visual size */
-.ndt-gh-icon-wrapper {
-  width: 96px;            /* crank this if you want even bigger */
-  height: 96px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transform-style: preserve-3d;
-}
-
-/* SVG fills the wrapper */
-.ndt-gh-icon-svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
-  overflow: visible;
-  transition: transform 0.3s ease;
-}
-
-/* Hover color */
-.ndt-gh-icon:hover {
-  color: var(--primary);
-}
-
-/* Mobile sanity so it doesn’t dominate at 375px */
-@media (max-width: 640px) {
-  .ndt-gh-icon-wrapper {
-    width: 72px;
-    height: 72px;
-  }
-  .ndt-gh-icons {
-    gap: 2rem;
-  }
-}
-/* Reality earth anchor so melt feels natural */
-.ndt-earth-group {
-  transform-origin: 50% 40%;
-}
-
-/* =========================================
-   Rotating stamp (outer ring + logo inside)
-   ========================================= */
-
-.ndt-gh-stamp {
-  position: absolute;
-  top: -50px;
-  right: -40px;
-  width: 140px;
-  height: 140px;
-  background: var(--primary);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 12px 24px rgba(186, 162, 231, 0.2);
-  transform: translateZ(40px);
-  overflow: hidden; /* keep everything clean inside the circle */
-}
-
-/* Outer ring: the circle text SVG */
-.ndt-gh-stamp svg:first-child {
-  width: 100%;
-  height: 100%;
-  animation: ndt-gh-stamp-spin 16s linear infinite;
-  pointer-events: none;
-}
-
-.ndt-gh-stamp text {
-  font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  fill: var(--text-on-primary);
-}
-
-/* Center logo – your dog head SVG as an <img> */
-.ndt-gh-stamp-logo {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  display: block;
-  transform-origin: 50% 50%;
-  animation: ndt-gh-stamp-inner-spin 12s linear infinite;
-  pointer-events: none;
-}
-
-/* Outer ring spin */
-@keyframes ndt-gh-stamp-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* Inner logo spin (counter-direction for subtle parallax) */
-@keyframes ndt-gh-stamp-inner-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(-360deg); }
-}
-
-
-/* =========================================
-   CTAs – text-only base, pill grows on hover
-   ========================================= */
-
-.ndt-gh-ctas {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 3rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* Base CTA link – text only by default */
-.ndt-gh-link {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-
-  padding: 0.8rem 1.9rem;
-  border-radius: 999px;
-
-  background: transparent;
-  border: 1px solid transparent; /* invisible, keeps layout stable */
-
-  text-decoration: none !important;
-  font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-weight: 500;
-  font-size: 1.05rem;
-
-  isolation: isolate;
-  overflow: hidden;
-
-  opacity: 1 !important;
-}
-
-/* Text span – follows currentColor */
-.ndt-gh-link-text {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  color: inherit;
-  opacity: 1;
-  transition: color 0.25s ease;
-}
-
-/* Variant base colors (REST STATE) */
-.ndt-gh-link-primary {
-  color: var(--primary);      /* purple text before sweep */
-}
-
-.ndt-gh-link-secondary {
-  color: var(--text);         /* neutral text before sweep */
-}
-
-/* When pill is active (hover/focus), use pure ink/black */
-.ndt-gh-link-primary:hover,
-.ndt-gh-link-primary:focus-visible,
-.ndt-gh-link-secondary:hover,
-.ndt-gh-link-secondary:focus-visible {
-  color: var(--utility-ink, var(--text-on-primary));
-}
-
-/* Sweep background – animated via GSAP scaleX */
-.ndt-gh-link-sweep {
-  position: absolute;
-  inset: 0;
-  transform: scaleX(0);
-  transform-origin: left center;
-  z-index: 0;
-  pointer-events: none;
-  border-radius: 999px;
-}
-
-/* Primary sweep – purple glass, no border */
-.ndt-gh-link-primary .ndt-gh-link-sweep {
-  background: linear-gradient(
-    135deg,
-    var(--primary) 0%,
-    var(--primary-hover) 100%
-  );
-  border: none;
-}
-
-/* Secondary sweep – blue glass, no border */
-.ndt-gh-link-secondary .ndt-gh-link-sweep {
-  background: linear-gradient(
-    135deg,
-    var(--info) 0%,
-    var(--accent) 100%
-  );
-  border: none;
-}
-
-/* Arrow container – flex-centered next to text */
-.ndt-gh-link-arrow {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  opacity: 0;                 /* GSAP still fades this in */
-  transform: translateX(-4px); /* GSAP can move from here */
-  flex-shrink: 0;
-  z-index: 1;
-}
-
-/* Modern chevron arrow */
-.ndt-gh-link-arrow::before {
-  content: '';
-  width: 9px;
-  height: 9px;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: translateY(1px) rotate(-45deg);  /* nudged down slightly */
-  transform-origin: center;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-/* Subtle motion on hover – small push to the right */
-.ndt-gh-card:hover .ndt-gh-link-arrow::before {
-  transform: translate(2px, 1px) rotate(-45deg);
-  opacity: 1;
-}
-
-
-.ndt-gh-card:hover .ndt-gh-link-arrow::after {
-  animation: ndt-gh-arrow-head 0.35s ease-out forwards;
-}
-
-/* Keyframes – tiny push forward, no goofy bounce */
-@keyframes ndt-gh-arrow-bar {
-  from {
-    transform: translateY(-50%) scaleX(0.8);
-    opacity: 0.7;
-  }
-  to {
-    transform: translateY(-50%) scaleX(1);
-    opacity: 1;
-  }
-}
-
-@keyframes ndt-gh-arrow-head {
-  from {
-    transform: translateY(-50%) translateX(-1px) rotate(45deg);
-    opacity: 0.7;
-  }
-  to {
-    transform: translateY(-50%) translateX(0) rotate(45deg);
-    opacity: 1;
-  }
-}
-
-/* Focus ring */
-.ndt-gh-link:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--primary-focus);
-}
-
-
-
-
-
-/* Responsive tweaks */
-@media (max-width: 1024px) {
-  .ndt-gh-shell {
-    padding: 2.5rem 1.8rem;
-  }
-  .ndt-gh-card {
-    padding: 3rem 2rem;
-    width: 95%;
-  }
-  .ndt-gh-icons {
-    gap: 2rem;
-    margin: 2rem 0;
-  }
-  .ndt-gh-stamp {
-    width: 110px;
-    height: 110px;
-    top: -30px;
-    right: -20px;
-  }
-}
-
-@media (max-width: 640px) {
-  .ndt-gh-card {
-    padding: 2.5rem 1.5rem;
-  }
-  .ndt-gh-ctas {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-}
-/* Icon figure wrapper for consistent sizing */
-.ndt-gh-icon-wrapper {
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transform-style: preserve-3d;
-}
-/* =========================================
-   PURPOSE WIDGET
-   ========================================= */
-
-.ndt-purpose-shell,
-.ndt-purpose-shell * {
-  box-sizing: border-box;
-  font-family: Ubuntu, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
-}
-
-/* kill Elementor default link / button color inside this widget */
-.ndt-purpose-shell a,
-.ndt-purpose-shell a:visited,
-.ndt-purpose-shell a:active {
-  color: var(--text, #F5F5F4) !important;
-  text-decoration: none !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.ndt-purpose-shell a:hover {
-  color: #FFFFFF !important;
-}
-
-/* Shell: let the SECTION control width + padding */
-.ndt-purpose-shell {
-  width: 100%;
-  display: block;         /* no flex centering */
-  padding: 0;             /* section/container owns the padding */
-  margin: 0;
-  background: transparent;
-}
-
-/* CARD – match hero combo help card plate, full width inside section */
-
-.ndt-purpose-card {
-  position: relative;
-  width: 100%;
-  max-width: none;        /* remove 1400px choke */
-
-  border-radius: 2em;
-
-  /* Same plate + grid + noise recipe as hero */
-  background-color: var(--ndt-bg-light, #1A1B1E);
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"),
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 200px 200px, 30px 30px, 30px 30px;
-  background-position: center center, 0 0, 0 0;
-  background-repeat: repeat;
-
-  border: 3px solid var(--ndt-border, var(--border, #2E3138));
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.8),
-    0 8px 16px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.02) inset,
-    0 1px 0 rgba(255, 255, 255, 0.03) inset;
-
-  color: var(--ndt-text-muted, var(--text-muted, #BFC4BB));
-  overflow: hidden;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.ndt-purpose-card.ndt-purpose-hidden {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-
-/* BACKGROUND LAYERS – we only keep the accent line, grid/noise live on card */
-
-.ndt-purpose-bg-noise,
-.ndt-purpose-bg-grid {
-  display: none !important;
-}
-
-.ndt-purpose-bg-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(186, 162, 231, 0.4), transparent);
-  opacity: 0.4;
-  z-index: 0;
-}
-
-
-/* CONTENT */
-
-.ndt-purpose-content {
-  position: relative;
-  z-index: 5;
-  padding: clamp(1.5rem, 4vw, 3rem);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2rem, 4vw, 3rem);
-}
-
-/* HEADER */
-
-.ndt-purpose-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.75fr);
-  gap: clamp(2rem, 3vw, 2.5rem);
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border-muted, #26282C);
-  align-items: flex-start;
-  opacity: 1;
-}
-
-/* stack on mobile so it doesn't get weird */
-@media (max-width: 767px) {
-  .ndt-purpose-header {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .ndt-purpose-lead {
-    padding-left: 0;
-    border-left: none;
-  }
-}
-
-/* Give the headline more room on big screens */
-@media (min-width: 1200px) {
-  .ndt-purpose-header {
-    grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.6fr);
-  }
-}
-
-/* Container just handles structure */
-.ndt-purpose-headline {
-  margin: 0;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: var(--text, #F5F5F4);
-}
-
-/* TOP LINE – both sentences, smaller, muted */
-.ndt-purpose-topline {
-  display: block;
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-  font-weight: 600;
-  color: var(--text-muted, #BFC4BB);
-}
-
-/* Subhead stays allowed to wrap, only the accent word is pinned */
-.ndt-purpose-subhead {
-  display: block;
-  margin-top: 0.6rem;
-  font-size: clamp(1.7rem, 2.7vw, 2.2rem);
-  font-weight: 800;
-  line-height: 1.15;
-  color: var(--text, #F5F5F4);
-  text-shadow: 0 0.04em 0.22em rgba(0, 0, 0, 0.7);
-}
-
-
-/* Right column copy */
-
-.ndt-purpose-lead {
-  margin: 0;
-  font-size: clamp(1rem, 2vw, 1.125rem);
-  font-weight: 500;
-  line-height: 1.6;
-  color: var(--text-muted, #BFC4BB);
-  padding-left: 1.5rem;
-  border-left: 2px solid var(--border-muted, #26282C);
-  padding-top: 0.5rem;
-
-  /* condense it to the right so the headline gets breathing room */
-  max-width: 30rem;
-  margin-left: auto;
-}
-
-
-/* =========================================
-   Purpose headline accent words + modern underlines
-   ========================================= */
-
-.ndt-purpose-word {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 0.06em;
-}
-
-.ndt-purpose-word-text {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  white-space: nowrap;
-  font-weight: 800; /* Thicker letters */
-  letter-spacing: -0.1em; /* Tight spacing */
-}
-
-.ndt-purpose-char {
-  display: inline-block;
-}
-
-/* Underline base – subtle pill with glow */
-.ndt-purpose-word-underline {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 0.08em;
-  border-radius: 999px;
-  width: 0;
-  opacity: 0.95;
-  transform-origin: left center;
-  pointer-events: none;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-}
-
-/* Tool / result use cooler blue tone */
-.ndt-purpose-word--tool .ndt-purpose-word-underline,
-.ndt-purpose-word--result .ndt-purpose-word-underline {
-  background: linear-gradient(
-    90deg,
-    rgba(120, 149, 196, 0.0),
-    rgba(120, 149, 196, 0.9),
-    rgba(120, 149, 196, 0.15)
-  );
-}
-
-/* Product gets the full NDT purple and slightly thicker line */
-.ndt-purpose-word--product .ndt-purpose-word-underline {
-  height: 0.09em;
-  background: linear-gradient(
-    90deg,
-    rgba(186, 162, 231, 0.0),
-    rgba(186, 162, 231, 1),
-    rgba(186, 162, 231, 0.25)
-  );
-}
-
-/* Color hierarchy for the text itself */
-.ndt-purpose-word--tool .ndt-purpose-word-text,
-.ndt-purpose-word--result .ndt-purpose-word-text {
-  font-weight: 600;
-  color: var(--utility-sky, #7895C4);
-}
-
-.ndt-purpose-word--product .ndt-purpose-word-text {
-  font-weight: 800;
-  color: var(--primary, #BAA2E7);
-}
-
-/* Reduced motion: no suspense, just show the lines and letters */
-@media (prefers-reduced-motion: reduce) {
-  .ndt-purpose-word-underline {
-    width: 100% !important;
-    opacity: 1 !important;
-  }
-
-  .ndt-purpose-char {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
-
-
-/* COLUMNS */
-
-.ndt-purpose-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 4vw, 4rem);
-}
-
-.ndt-purpose-col-header {
-  position: relative;
-  display: block;
-  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
-  font-weight: 600;
-  color: var(--text, #F5F5F4);
-  padding-bottom: 0.75rem;
-  margin: 0 0 1.5rem 0;
-  line-height: 1.3;
-  opacity: 1;
-}
-
-.ndt-purpose-col-header.ndt-purpose-hidden {
-  opacity: 0;
-}
-
-.ndt-purpose-col-underline {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.ndt-purpose-col-underline.ndt-purpose-hidden {
-  width: 0%;
-}
-
-.ndt-purpose-col-underline--red {
-  background-color: var(--danger, #A14553);
-}
-
-.ndt-purpose-col-underline--green {
-  background-color: var(--success, #85A894);
-}
-
-/* ITEMS GRID */
-
-.ndt-purpose-items-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  align-items: stretch;
-}
-
-/* ITEM */
-
-.ndt-purpose-item {
-  position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 1rem;
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 1rem;
-  cursor: pointer;
-  overflow: hidden;
-  transition: border-color 0.3s ease, transform 0.2s ease;
-  height: 100%;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.ndt-purpose-item.ndt-purpose-hidden {
-  opacity: 0;
-  transform: translateY(16px);
-}
-
-.ndt-purpose-item:hover {
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.ndt-purpose-item-glow {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  background: linear-gradient(135deg, #282a30, #1a1b1e);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ndt-purpose-item:hover .ndt-purpose-item-glow {
-  opacity: 1;
-}
-
-.ndt-purpose-icon-box {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 1rem;
-  background-color: #151618;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-  display: grid;
-  place-items: center;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-.ndt-purpose-item:hover .ndt-purpose-icon-box {
-  background-color: #0F1012;
-  border-color: rgba(140, 150, 170, 0.2);
-}
-
-.ndt-purpose-icon-svg {
-  width: 1.375rem;
-  height: 1.375rem;
-  transition: transform 0.3s ease;
-}
-
-.ndt-purpose-item:hover .ndt-purpose-icon-svg {
-  transform: rotate(-12deg) scale(1.1);
-}
-
-.ndt-purpose-item-text-wrap {
-  position: relative;
-  z-index: 1;
-  padding-top: 0.25rem;
-  flex-grow: 1;
-}
-
-.ndt-purpose-item-text {
-  margin: 0;
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--text-muted, #BFC4BB);
-  transition: color 0.3s;
-}
-
-.ndt-purpose-item:hover .ndt-purpose-item-text {
-  color: var(--text, #F5F5F4);
-}
-
-.ndt-purpose-hover-dot {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  opacity: 0;
-  transform: scale(0);
-  transition: all 0.3s ease;
-  z-index: 2;
-}
-
-.ndt-purpose-item:hover .ndt-purpose-hover-dot {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* FOOTER */
-
-.ndt-purpose-footer {
-  margin-top: auto;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--border-muted, #26282C);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  opacity: 1;
-  flex-wrap: wrap;
-}
-
-.ndt-purpose-footer.ndt-purpose-hidden {
-  opacity: 0;
-}
-
-.ndt-purpose-tagline {
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.6;
-  color: var(--text-muted, #BFC4BB);
-  max-width: 36rem;
-  margin: 0;
-}
-
-.ndt-purpose-tagline strong {
-  color: var(--text-muted, #BFC4BB);
-  margin-right: 0.05rem;
-}
-
-.ndt-purpose-cta-wrap {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.ndt-purpose-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text, #F5F5F4) !important;
-  white-space: nowrap;
-}
-
-/* Chevron arrow using the span itself */
-.ndt-purpose-cta-arrow {
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  margin-left: 0.5rem;
-
-  /* Draw the arrow */
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-
-  transform: translateY(1px) rotate(-45deg);  /* same look as your other chevron */
-  transform-origin: center;
-
-  transition: transform 0.25s ease, opacity 0.25s ease;
-  opacity: 0.9;
-
-  font-size: 0;   /* in case you left a "→" inside */
-  line-height: 1; /* don't let line box clip anything */
-}
-
-/* Hover: subtle push to the right */
-.ndt-purpose-cta:hover .ndt-purpose-cta-arrow {
-  transform: translate(2px, 1px) rotate(-45deg);
-  opacity: 1;
-}
-
-
-/* Paw trail icon next to "See how training works" */
-.ndt-purpose-paw {
-  width: 5.25rem;      /* tweak this if the trail feels too long/short */
-  height: auto;
-  display: block;
-  flex-shrink: 0;
-
-  color: var(--primary, #BAA2E7);
-}
-
-/* Make the paw shapes use the CTA text color */
-.ndt-purpose-paw .ndt-paw {
-  fill: currentColor;
-}
-
-/* Base state: faint prints */
-.ndt-purpose-paw .ndt-paw-step {
-  opacity: 0.2;
-  transition: opacity 0.3s ease;
-}
-
-/* Hover over the whole CTA row = "group-hover" */
-.ndt-purpose-cta-wrap:hover .ndt-purpose-paw .ndt-paw-step-1 {
-  opacity: 1;
-  transition-delay: 0ms;
-}
-
-.ndt-purpose-cta-wrap:hover .ndt-purpose-paw .ndt-paw-step-2 {
-  opacity: 1;
-  transition-delay: 150ms;
-}
-
-.ndt-purpose-cta-wrap:hover .ndt-purpose-paw .ndt-paw-step-3 {
-  opacity: 1;
-  transition-delay: 300ms;
-}
-
-.ndt-purpose-cta-wrap:hover .ndt-purpose-paw .ndt-paw-step-4 {
-  opacity: 1;
-  transition-delay: 450ms;
-}
-
-
-/* Hover state from the CTA wrapper */
-.ndt-purpose-cta-wrap:hover .ndt-purpose-paw {
-  opacity: 1;
-  transform: translateX(2px);  /* tiny nudge forward; kill this if you hate it */
-}
-
-
-/* RESPONSIVE */
-
-@media (max-width: 1024px) {
-  .ndt-purpose-header {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .ndt-purpose-cols {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .ndt-purpose-lead {
-    padding-left: 0;
-    border-left: none;
-    border-top: 2px solid var(--border-muted, #26282C);
-    padding-top: 1rem;
-  }
-}
-
-@media (max-width: 700px) {
-  .ndt-purpose-items-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ndt-purpose-item {
-    padding: 1rem;
-  }
-
-  .ndt-purpose-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .ndt-purpose-hover-dot {
-    display: none;
-  }
-}
-
-/* TEMP: make everything visible even if JS dies */
-.ndt-hero-heading,
-#ndt-hero-card,
-.ndt-entrance-element,
-.ndt-pain-section,
-.ndt-pain-desc {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
-
 
 

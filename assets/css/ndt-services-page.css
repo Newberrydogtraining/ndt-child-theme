@@ -8,25 +8,25 @@
    ========================================= */
 
 .ndt-services-page {
-  --sp-primary: #BAA2E7;
+  --sp-primary: var(--accent);
   --sp-primary-glow: rgba(186, 162, 231, 0.35);
-  --sp-sky: #7895C4;
+  --sp-sky: var(--accent);
   --sp-sky-glow: rgba(120, 149, 196, 0.35);
-  --sp-ochre: #9D8058;
+  --sp-ochre: var(--accent);
   --sp-ochre-glow: rgba(157, 128, 88, 0.35);
   --sp-sage: #85A894;
   --sp-sage-glow: rgba(133, 168, 148, 0.35);
   --sp-danger: #A14553;
   
   --sp-bg-deep: #050607;
-  --sp-bg-dark: #0B0C0E;
+  --sp-bg-dark: var(--surface);
   --sp-bg-card: #12141A;
   --sp-bg-elevated: #1A1D24;
   --sp-border: rgba(255, 255, 255, 0.06);
   --sp-border-hover: rgba(255, 255, 255, 0.12);
   
-  --sp-text: #F5F5F4;
-  --sp-text-muted: #9CA3AF;
+  --sp-text: var(--text);
+  --sp-text-muted: var(--text-muted);
   --sp-text-dim: #6B7280;
   
   --sp-radius-sm: 12px;
@@ -275,7 +275,7 @@
 }
 
 .ndt-sp-cta--primary {
-  background: linear-gradient(135deg, var(--sp-primary), #A28DD8);
+  background: linear-gradient(135deg, var(--sp-primary), var(--accent-hover));
   color: #0D0E10;
   border: none;
   box-shadow: 
@@ -363,7 +363,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--sp-active, #BAA2E7), transparent);
+  background: linear-gradient(90deg, var(--sp-active, var(--accent)), transparent);
   opacity: 0.9;
 }
 
@@ -390,7 +390,7 @@
 .ndt-sp-orbit-icon svg {
   width: 30px;
   height: 30px;
-  color: var(--sp-active, #BAA2E7);
+  color: var(--sp-active, var(--accent));
   transition: color 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -413,7 +413,7 @@
 .ndt-sp-orbit-desc {
   margin: 0;
   font-size: 0.9rem;
-  color: #9CA3AF;
+  color: var(--text-muted);
   line-height: 1.4;
 }
 
@@ -433,32 +433,32 @@
 
 .ndt-sp-orbit-pill:hover,
 .ndt-sp-orbit-pill.is-active {
-  background: rgba(26, 27, 30, 0.95);
+  background: rgba(var(--surface-raised-rgb), 0.95);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   transform: scale(1.05);
 }
 
 .ndt-sp-orbit-pill.is-active {
-  border-color: var(--pill-color, #BAA2E7);
-  color: var(--pill-color, #BAA2E7);
+  border-color: var(--pill-color, var(--accent));
+  color: var(--pill-color, var(--accent));
 }
 
 /* Grid positions */
 .ndt-sp-orbit-pill--private {
-  --pill-color: #BAA2E7;
+  --pill-color: var(--accent);
   grid-column: 2;
   grid-row: 1;
 }
 
 .ndt-sp-orbit-pill--day {
-  --pill-color: #7895C4;
+  --pill-color: var(--accent);
   grid-column: 3;
   grid-row: 2;
   justify-self: start;
 }
 
 .ndt-sp-orbit-pill--board {
-  --pill-color: #9D8058;
+  --pill-color: var(--accent);
   grid-column: 2;
   grid-row: 3;
 }
@@ -1523,7 +1523,7 @@
   top: 4px;
   left: 4px;
   bottom: 4px;
-  background: linear-gradient(135deg, var(--sp-primary), #A28DD8);
+  background: linear-gradient(135deg, var(--sp-primary), var(--accent-hover));
   border-radius: 999px;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.3s ease;
   pointer-events: none;

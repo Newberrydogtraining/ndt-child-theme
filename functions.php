@@ -46,6 +46,8 @@ function ndt_child_enqueue_assets() {
     );
 
     // Header CSS (site-wide)
+    // NOTE: Currently empty - styles are inline in Elementor
+    // TODO: Move inline header styles to this file
     wp_enqueue_style(
         'ndt-header-css',
         $theme_uri . '/assets/css/ndt-header.css',
@@ -53,23 +55,23 @@ function ndt_child_enqueue_assets() {
         $ver
     );
 
-    // Hero / home-page CSS (hero card, services, gallery)
-    wp_enqueue_style(
-        'ndt-hero-css',
-        $theme_uri . '/assets/css/ndt-hero.css',
-        array( 'ndt-global-css' ),
-        $ver
-    );
-
-    // Services carousel CSS (site-wide for now)
-    wp_enqueue_style(
-        'ndt-services-css',
-        $theme_uri . '/assets/css/ndt-services.css',
-        array( 'ndt-global-css' ),
-        $ver
-    );
+    // Services carousel CSS (CONDITIONAL - Services page + Homepage for glass hero widget)
+    if ( is_page( $ndt_services_page_id ) 
+        || is_front_page() 
+        || is_page( $ndt_home_page_id )
+        || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_services_page_id ) 
+    ) {
+        wp_enqueue_style(
+            'ndt-services-css',
+            $theme_uri . '/assets/css/ndt-services.css',
+            array( 'ndt-global-css' ),
+            $ver
+        );
+    }
 
     // Footer CSS (site-wide)
+    // NOTE: Currently empty - styles are inline in Elementor
+    // TODO: Move inline footer styles to this file
     wp_enqueue_style(
         'ndt-footer-css',
         $theme_uri . '/assets/css/ndt-footer.css',
@@ -85,7 +87,7 @@ function ndt_child_enqueue_assets() {
         $ver
     );
 
-    // FAQ page CSS
+    // FAQ page CSS (CONDITIONAL - only on FAQ page)
     if ( is_page( $ndt_faq_page_id ) || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_faq_page_id ) ) {
         wp_enqueue_style(
             'ndt-faq-css',
@@ -100,9 +102,7 @@ function ndt_child_enqueue_assets() {
     $is_previewing = is_preview() && isset( $_GET['preview'] ) && isset( $_GET['preview_nonce'] );
 
     $preview_is_about = $is_previewing && (
-        // Match resolved About ID when available
         ( $ndt_about_page_id && $preview_id === $ndt_about_page_id )
-        // Fallback: allow any preview to load About assets if ID is unknown
         || ! $ndt_about_page_id
     );
 
@@ -114,7 +114,20 @@ function ndt_child_enqueue_assets() {
         || $preview_is_about
         || $uri_is_about;
 
-    // Service Area page CSS
+    // About page CSS (CONDITIONAL - only on About page)
+    if ( $is_about_page ) {
+        $about_css_path = get_stylesheet_directory() . '/assets/css/ndt-about.css';
+        $about_ver_css  = file_exists( $about_css_path ) ? filemtime( $about_css_path ) : $ver;
+        
+        wp_enqueue_style(
+            'ndt-about-css',
+            $theme_uri . '/assets/css/ndt-about.css',
+            array( 'ndt-global-css' ),
+            $about_ver_css
+        );
+    }
+
+    // Service Area page CSS (CONDITIONAL - only on Service Area page)
     if ( is_page( $ndt_service_area_page_id ) || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_service_area_page_id ) ) {
         wp_enqueue_style(
             'ndt-service-area-css',
@@ -124,26 +137,12 @@ function ndt_child_enqueue_assets() {
         );
     }
 
-    // About assets (global load; use filemtime for cache-busting while iterating)
-    $about_css_path = get_stylesheet_directory() . '/assets/css/ndt-about.css';
-    $about_js_path  = get_stylesheet_directory() . '/assets/js/ndt-about.js';
-    $about_ver_css  = file_exists( $about_css_path ) ? filemtime( $about_css_path ) : $ver;
-    $about_ver_js   = file_exists( $about_js_path ) ? filemtime( $about_js_path ) : $ver;
-
-    // About page CSS
-    wp_enqueue_style(
-        'ndt-about-css',
-        $theme_uri . '/assets/css/ndt-about.css',
-        array( 'ndt-global-css' ),
-        $about_ver_css
-    );
-
     /**
      * JS
-     * GSAP stack first, then global NDT helpers, then header/hero behavior.
+     * GSAP stack first, then global NDT helpers, then page-specific behavior.
      */
 
-    // GSAP core
+    // GSAP core (loaded once globally from CDN)
     wp_enqueue_script(
         'gsap-core',
         'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
@@ -171,6 +170,7 @@ function ndt_child_enqueue_assets() {
     );
 
     // Global NDT JS (namespace, onReady, gsap helpers)
+    // NOTE: This registers ScrollTrigger - no inline code needed
     wp_enqueue_script(
         'ndt-global-js',
         $theme_uri . '/assets/js/ndt.js',
@@ -189,6 +189,8 @@ function ndt_child_enqueue_assets() {
     );
 
     // Header behavior (scroll, sticky etc.) site-wide
+    // NOTE: Currently empty - behavior is inline in Elementor
+    // TODO: Move inline header JS to this file
     wp_enqueue_script(
         'ndt-header-js',
         $theme_uri . '/assets/js/ndt-header.js',
@@ -197,17 +199,40 @@ function ndt_child_enqueue_assets() {
         true
     );
 
-    // Services carousel behavior (site-wide for now)
-    wp_enqueue_script(
-        'ndt-services-js',
-        $theme_uri . '/assets/js/ndt-services.js',
-        array( 'ndt-global-js' ),
-        $ver,
-        true
-    );
+    // Services carousel behavior (CONDITIONAL - Services page + Homepage for glass hero widget)
+    if ( is_page( $ndt_services_page_id ) 
+        || is_front_page() 
+        || is_page( $ndt_home_page_id )
+        || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_services_page_id ) 
+    ) {
+        wp_enqueue_script(
+            'ndt-services-js',
+            $theme_uri . '/assets/js/ndt-services.js',
+            array( 'ndt-global-js' ),
+            $ver,
+            true
+        );
+    }
 
-    // Hero / home-page behavior (parallax, services guide, drag gallery)
+    // Hero / home-page assets
     if ( is_front_page() || is_page( $ndt_home_page_id ) ) {
+        // Hero CSS – above-the-fold styles
+        wp_enqueue_style(
+            'ndt-hero-css',
+            $theme_uri . '/assets/css/ndt-hero.css',
+            array( 'ndt-global-css' ),
+            $ver
+        );
+
+        // Hero sections CSS – other home sections (loads normally, no deferring)
+        wp_enqueue_style(
+            'ndt-hero-sections-css',
+            $theme_uri . '/assets/css/ndt-hero-sections.css',
+            array( 'ndt-global-css' ),
+            $ver
+        );
+
+        // Hero JS – hero-only logic
         wp_enqueue_script(
             'ndt-hero-js',
             $theme_uri . '/assets/js/ndt-hero.js',
@@ -215,9 +240,18 @@ function ndt_child_enqueue_assets() {
             $ver,
             true
         );
+
+        // Hero sections JS – non-hero home sections with deferred initialization
+        wp_enqueue_script(
+            'ndt-hero-sections-js',
+            $theme_uri . '/assets/js/ndt-hero-sections.js',
+            array( 'ndt-hero-js' ),
+            $ver,
+            true
+        );
     }
 
-    // FAQ behavior
+    // FAQ behavior (CONDITIONAL - only on FAQ page)
     if ( is_page( $ndt_faq_page_id ) || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_faq_page_id ) ) {
         wp_enqueue_script(
             'ndt-faq-js',
@@ -228,7 +262,7 @@ function ndt_child_enqueue_assets() {
         );
     }
 
-    // Services page behavior
+    // Services page behavior (CONDITIONAL - only on Services page)
     if ( is_page( $ndt_services_page_id ) || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_services_page_id ) ) {
         wp_enqueue_style(
             'ndt-services-page-css',
@@ -245,7 +279,7 @@ function ndt_child_enqueue_assets() {
         );
     }
 
-    // Service Area page behavior
+    // Service Area page behavior (CONDITIONAL - only on Service Area page)
     if ( is_page( $ndt_service_area_page_id ) || ( is_preview() && isset( $_GET['preview_id'] ) && (int) $_GET['preview_id'] === $ndt_service_area_page_id ) ) {
         wp_enqueue_script(
             'ndt-service-area-js',
@@ -256,13 +290,18 @@ function ndt_child_enqueue_assets() {
         );
     }
 
-    // About page behavior (load globally; JS is self-guarded by selectors)
-    wp_enqueue_script(
-        'ndt-about-js',
-        $theme_uri . '/assets/js/ndt-about.js',
-        array( 'ndt-global-js' ),
-        $about_ver_js,
-        true
-    );
+    // About page behavior (CONDITIONAL - only on About page)
+    if ( $is_about_page ) {
+        $about_js_path = get_stylesheet_directory() . '/assets/js/ndt-about.js';
+        $about_ver_js  = file_exists( $about_js_path ) ? filemtime( $about_js_path ) : $ver;
+        
+        wp_enqueue_script(
+            'ndt-about-js',
+            $theme_uri . '/assets/js/ndt-about.js',
+            array( 'ndt-global-js' ),
+            $about_ver_js,
+            true
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'ndt_child_enqueue_assets' );
