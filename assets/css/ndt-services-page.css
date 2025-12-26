@@ -421,7 +421,7 @@
 .ndt-sp-orbit-pill {
   padding: 0.7rem 1.2rem;
   background: linear-gradient(135deg, rgba(26, 27, 30, 0.9), rgba(16, 17, 19, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(var(--border-rgb), 0.55);
   border-radius: 999px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -433,8 +433,12 @@
 
 .ndt-sp-orbit-pill:hover,
 .ndt-sp-orbit-pill.is-active {
-  background: rgba(var(--surface-raised-rgb), 0.95);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --ndt-card-surface-alpha-current: var(--ndt-card-surface-alpha-hover);
+  --ndt-card-border-alpha-current: var(--ndt-card-border-alpha-hover);
+  --ndt-card-highlight-alpha-current: var(--ndt-card-highlight-alpha-hover);
+  --ndt-card-tint-alpha-current: 0;
+  background: var(--ndt-raised-bg);
+  box-shadow: var(--ndt-raised-shadow-hover);
   transform: scale(1.05);
 }
 

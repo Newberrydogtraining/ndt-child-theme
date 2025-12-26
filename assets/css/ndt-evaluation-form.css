@@ -49,13 +49,15 @@ body.ndt-eval-lock {
   max-width: 640px;
   width: min(100%, 720px);
   margin: auto;
-  background: var(--surface-raised);
+  --ndt-card-surface-alpha-current: var(--ndt-card-surface-alpha);
+  --ndt-card-border-alpha-current: var(--ndt-card-border-alpha);
+  --ndt-card-highlight-alpha-current: var(--ndt-card-highlight-alpha);
+  --ndt-card-tint-alpha-current: 0;
+  background: var(--ndt-raised-bg);
   color: var(--text);
   border-radius: 18px;
-  border: 1px solid var(--border);
-  box-shadow:
-    0 22px 54px rgba(0, 0, 0, 0.65),
-    0 0 0 1px rgba(186, 162, 231, 0.06) inset;
+  border: var(--ndt-raised-border);
+  box-shadow: var(--ndt-raised-shadow);
   padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1rem, 2.5vw, 1.5rem);
   transform: translate3d(0, 0, 0);
   will-change: transform;
@@ -467,10 +469,14 @@ body.ndt-eval-lock {
   top: calc(100% + 0.5rem);
   left: 0;
   right: 0;
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
+  --ndt-card-surface-alpha-current: var(--ndt-card-surface-alpha);
+  --ndt-card-border-alpha-current: var(--ndt-card-border-alpha);
+  --ndt-card-highlight-alpha-current: var(--ndt-card-highlight-alpha);
+  --ndt-card-tint-alpha-current: 0;
+  background: var(--ndt-raised-bg);
+  border: var(--ndt-raised-border);
   border-radius: 16px;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65);
+  box-shadow: var(--ndt-raised-shadow);
   max-height: 240px;
   overflow-y: auto;
   padding: 0.5rem;

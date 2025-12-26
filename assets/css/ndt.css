@@ -25,6 +25,11 @@
   --surface-raised-rgb: 26, 26, 26;
   --text-rgb: 245, 245, 244;
   --text-muted-rgb: 168, 171, 166;
+  --border-rgb: 46, 49, 56;
+
+  /* Brand/action RGB channel values for rgba() usage */
+  --accent-rgb: 139, 111, 201;
+  --cta-rgb: 0, 105, 42;
 
 
   /* ═══════════════════════════════════════════════════
@@ -44,6 +49,7 @@
 
   --cta: #00692A;                  /* Signature green */
   --cta-hover: #2F694C;            /* Warmer hover */
+  --cta-active: var(--cta);
 
   /* Usage: ONLY primary CTAs ("Get Started", "Book Now") - max 1-2 per page */
 }
@@ -111,7 +117,7 @@ body.elementor-page,
   --text-on-primary: var(--text);
   --ndt-text-on-primary: var(--text);
 
-  /* Old CTA/success → New CTA green */
+  /* Old CTA/success → New CTA */
   --ndt-success: var(--cta);
   --success: var(--cta);
 
@@ -125,6 +131,78 @@ body.elementor-page,
   --ndt-utility-sky: var(--accent);
   --ndt-utility-ochre: var(--accent);
   --ndt-utility-plum-deep: var(--accent);
+
+  /* =========================================
+     Block heading system (H1 block excluded)
+     Used for consistent hero section headings
+     ========================================= */
+
+  --ndt-h2-size: clamp(1.75rem, 4vw, 3.5rem);
+  --ndt-h2-weight: 600;
+  --ndt-h2-line: 1.15;
+  --ndt-h2-letter: -0.01em;
+
+  --ndt-subhead-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  --ndt-subhead-weight: 500;
+  --ndt-subhead-line: 1.45;
+  --ndt-subhead-letter: 0.01em;
+  --ndt-subhead-color: var(--text-muted);
+
+  --ndt-block-head-gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  --ndt-block-head-margin: clamp(2rem, 3vw, 2.75rem);
+  --ndt-block-head-maxw: 52ch;
+
+  /* Raised surface system (matte, neutral-cool, hardware-like) */
+  --ndt-card-surface-alpha: 0.26;
+  --ndt-card-surface-alpha-hover: 0.30;
+
+  /* Borders do the separation work (not glow) */
+  --ndt-card-border-alpha: 0.48;
+  --ndt-card-border-alpha-hover: 0.62;
+
+  /* Sheen must be visible (matte anodized edge), not “0.016 invisible” */
+  --ndt-card-highlight-alpha: 0.11;
+  --ndt-card-highlight-alpha-hover: 0.15;
+
+  /* Accent stays hover-only and subtle */
+  --ndt-card-tint-alpha: 0;
+  --ndt-card-tint-alpha-hover: 0.06;
+
+  /* Highlight/tint positioning */
+  --ndt-card-highlight-spot-x: 26%;
+  --ndt-card-highlight-spot-y: 0%;
+  --ndt-card-tint-spot-x: 20%;
+  --ndt-card-tint-spot-y: 0%;
+
+  /* Tight, modern lift (structured, not fog) */
+  --ndt-raised-shadow:
+    0 18px 54px rgba(0, 0, 0, 0.62),
+    0 2px 12px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.28);
+  --ndt-raised-shadow-hover:
+    0 22px 66px rgba(0, 0, 0, 0.68),
+    0 3px 14px rgba(0, 0, 0, 0.46),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.30);
+
+  /* Matte stacked fill (subtle top sheen + gentle vertical drift + base)
+     NOTE: keep this flat. No spotlight/vignette. */
+  --ndt-raised-bg:
+    radial-gradient(
+      120% 110% at var(--ndt-card-highlight-spot-x) var(--ndt-card-highlight-spot-y),
+      rgba(255, 255, 255, calc(var(--ndt-card-highlight-alpha-current, var(--ndt-card-highlight-alpha)) * 0.70)) 0%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.020) 0%,
+      rgba(255, 255, 255, 0.010) 46%,
+      rgba(0, 0, 0, 0.13) 100%
+    ),
+    rgba(var(--surface-raised-rgb), var(--ndt-card-surface-alpha-current, var(--ndt-card-surface-alpha)));
+
+  --ndt-raised-border: 1px solid rgba(var(--border-rgb), var(--ndt-card-border-alpha-current, var(--ndt-card-border-alpha)));
 
   /* State colors - only add if needed for forms/validation */
   --danger: #E85D6F;
@@ -466,5 +544,3 @@ button:focus-visible {
    Newberry Dog Training Co. - END
    Global design tokens and theme mapping
    ========================================= */
-
-

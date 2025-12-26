@@ -1149,8 +1149,12 @@ body:has(.ndt-services-page) .site-footer {
     flex: 1;
     min-width: 80px;
     padding: 0.75rem;
-    background: var(--surface-raised);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    --ndt-card-surface-alpha-current: var(--ndt-card-surface-alpha);
+    --ndt-card-border-alpha-current: var(--ndt-card-border-alpha);
+    --ndt-card-highlight-alpha-current: var(--ndt-card-highlight-alpha);
+    --ndt-card-tint-alpha-current: 0;
+    background: var(--ndt-raised-bg);
+    border: var(--ndt-raised-border);
     border-radius: 12px;
     font-size: 0.85rem;
     font-weight: 600;
